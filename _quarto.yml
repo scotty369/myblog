@@ -2,18 +2,18 @@ project:
   type: website
 
 website:
-  title: "Blog_Project"
+  title: "Scott Townsend"
+  description: "This is Scott Townsend's personal Blog."
   navbar:
     right:
-      - about.qmd
+      - text: Blog
+        href: blog.qmd 
       - icon: github
-        href: https://github.com/
-      - icon: twitter
-        href: https://twitter.com
+        href: https://github.com/scotty369
 format:
   html:
     theme: cosmo
-    css: styles.css
+    css: styles.scss
 
 
 
