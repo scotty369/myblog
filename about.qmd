@@ -1,6 +1,6 @@
 ---
 title: "Scott Townsend"
-image: profile.jpg
+image: Profile.jpg
 description-meta: Data Science Portfolio
 about:
   template: trestles
