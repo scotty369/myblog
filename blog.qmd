@@ -1,5 +1,5 @@
 ---
-title: "Blog_Project"
+title: "Senior Project Blog"
 listing:
   contents: posts
   sort: "date desc"
