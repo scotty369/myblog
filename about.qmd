@@ -1,7 +1,6 @@
 ---
 title: "Scott Townsend"
 image: Profile.jpg
-description-meta: Data Science Portfolio
 about:
   template: jolla
   links:
@@ -22,6 +21,8 @@ about:
       href: https://www.facebook.com/scott.townsend.1650332
 
 ---
+
+About me:
 
 Hi there! My name is Scott Townsend, and I'm a senior majoring in Data Science at Brigham Young University - Idaho. Currently, I'm working on my Senior Data Science Project, which has been an exciting and challenging journey.
 

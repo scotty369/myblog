@@ -1,0 +1,7 @@
+---
+title: "Week 2"
+author: "Scott Townsend"
+date: "2025-01-19"
+categories: [news, code]
+image: "week_2.jpg"
+---
