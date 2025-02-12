@@ -7,7 +7,7 @@ website:
   navbar:
     right:
       - text: Blog
-        href: blog.qmd 
+        href: about.qmd 
       - icon: github
         href: https://github.com/scotty369
 format:
