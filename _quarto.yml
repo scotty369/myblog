@@ -7,8 +7,7 @@ website:
   description: "This is Scott Townsend's personal Blog."
   navbar:
     right:
-      - text: Blog
-        href: about.qmd 
+      - about.qmd 
       - icon: github
         href: https://github.com/scotty369
       - icon: linkedin
