@@ -19,5 +19,82 @@
     "title": "Post With Code",
     "section": "",
     "text": "This is a post with executable code."
+  },
+  {
+    "objectID": "posts/Week_01/index.html",
+    "href": "posts/Week_01/index.html",
+    "title": "Week 1",
+    "section": "",
+    "text": "As part of my Senior Data Science Project, I’m creating a tool that automatically generates captions for images. This tool will help visually impaired individuals understand pictures and streamline tasks like photo tagging and social media captioning.\nThe model will be trained on the Flickr8k dataset, which contains thousands of images paired with captions. The goal is to build a model that can look at an image and generate a relevant description using machine learning techniques.\n\n\n\nThe following deliverables are part of this project:\n\nCleaned Data: Organize the dataset by ensuring that images and captions are properly matched.\nWorking Model: A model that extracts features from images (CNN) and generates captions (LSTM/Transformer).\nPerformance Check: Evaluate how well the captions align with the images.\nInteractive Demo: A tool to upload an image and receive a generated caption.\nVisuals: Graphs and diagrams showing the model’s performance and where it focuses in the image.\nWrite-Up: A brief explanation of the project and its potential applications.\n\n\n\n\nFirst, I load the dataset and ensure that the images and captions are properly matched:\nimport pandas as pd\nimport os\n\n# Load dataset\ncaption_file = \"/path/to/captions.txt\"\ntry:\n    data = pd.read_csv(caption_file)\n    print(\"Data loaded successfully\")\nexcept FileNotFoundError:\n    print(f\"Error: The file {caption_file} was not found.\")\n    data = pd.DataFrame()\n\ndata.head()\n\n# Remove duplicates\nif data.duplicated().any():\n    print(f\"Found {data.duplicated().sum()} duplicate rows. Removing duplicates...\")\n    data = data.drop_duplicates()\n\n# Handle missing captions\nif data['caption'].isnull().any():\n    print(f\"Found {data['caption'].isnull().sum()} missing captions. Replacing with 'No caption'.\")\n    data['caption'] = data['caption'].fillna(\"No caption\")\n\n# Check for invalid image paths\nvalid_image_paths = data['image'].apply(lambda x: os.path.exists(os.path.join(image_path, x)))\nif not valid_image_paths.all():\n    print(f\"Found {(~valid_image_paths).sum()} invalid image paths. Removing these rows...\")\n    data = data[valid_image_paths]\nStay tuned for the next post where I’ll dive into the data preprocessing for text and image features!"
+  },
+  {
+    "objectID": "posts/Week_01/index.html#introduction",
+    "href": "posts/Week_01/index.html#introduction",
+    "title": "Week 1",
+    "section": "",
+    "text": "As part of my Senior Data Science Project, I’m creating a tool that automatically generates captions for images. This tool will help visually impaired individuals understand pictures and streamline tasks like photo tagging and social media captioning.\nThe model will be trained on the Flickr8k dataset, which contains thousands of images paired with captions. The goal is to build a model that can look at an image and generate a relevant description using machine learning techniques."
+  },
+  {
+    "objectID": "posts/Week_01/index.html#project-deliverables",
+    "href": "posts/Week_01/index.html#project-deliverables",
+    "title": "Week 1",
+    "section": "",
+    "text": "The following deliverables are part of this project:\n\nCleaned Data: Organize the dataset by ensuring that images and captions are properly matched.\nWorking Model: A model that extracts features from images (CNN) and generates captions (LSTM/Transformer).\nPerformance Check: Evaluate how well the captions align with the images.\nInteractive Demo: A tool to upload an image and receive a generated caption.\nVisuals: Graphs and diagrams showing the model’s performance and where it focuses in the image.\nWrite-Up: A brief explanation of the project and its potential applications."
+  },
+  {
+    "objectID": "posts/Week_01/index.html#code-example-data-loading-and-preprocessing",
+    "href": "posts/Week_01/index.html#code-example-data-loading-and-preprocessing",
+    "title": "Week 1",
+    "section": "",
+    "text": "First, I load the dataset and ensure that the images and captions are properly matched:\nimport pandas as pd\nimport os\n\n# Load dataset\ncaption_file = \"/path/to/captions.txt\"\ntry:\n    data = pd.read_csv(caption_file)\n    print(\"Data loaded successfully\")\nexcept FileNotFoundError:\n    print(f\"Error: The file {caption_file} was not found.\")\n    data = pd.DataFrame()\n\ndata.head()\n\n# Remove duplicates\nif data.duplicated().any():\n    print(f\"Found {data.duplicated().sum()} duplicate rows. Removing duplicates...\")\n    data = data.drop_duplicates()\n\n# Handle missing captions\nif data['caption'].isnull().any():\n    print(f\"Found {data['caption'].isnull().sum()} missing captions. Replacing with 'No caption'.\")\n    data['caption'] = data['caption'].fillna(\"No caption\")\n\n# Check for invalid image paths\nvalid_image_paths = data['image'].apply(lambda x: os.path.exists(os.path.join(image_path, x)))\nif not valid_image_paths.all():\n    print(f\"Found {(~valid_image_paths).sum()} invalid image paths. Removing these rows...\")\n    data = data[valid_image_paths]\nStay tuned for the next post where I’ll dive into the data preprocessing for text and image features!"
+  },
+  {
+    "objectID": "posts/Week_03/index.html",
+    "href": "posts/Week_03/index.html",
+    "title": "Week 3",
+    "section": "",
+    "text": "In this post, I’ll walk you through the architecture of the model that generates captions for images.\n\n\nI start by using a pre-trained DenseNet201 model for feature extraction from the images. This CNN extracts useful features from the images, which will then be used by the LSTM model to generate captions.\nfrom tensorflow.keras.applications import DenseNet201\nfrom tensorflow.keras.models import Model\nfrom tqdm import tqdm\n\nmodel = DenseNet201()\nfe = Model(inputs=model.input, outputs=model.layers[-2].output)\n\nimg_size = 224\nfeatures = {}\nfor image in tqdm(data['image'].unique().tolist()):\n    img = load_img(os.path.join(image_path, image), target_size=(img_size, img_size))\n    img = img_to_array(img)\n    img = img / 255.\n    img = np.expand_dims(img, axis=0)\n    feature = fe.predict(img, verbose=0)\n    features[image] = feature\n\n\n\nThe model consists of two inputs: one for the image features and another for the tokenized caption. The image features go through a dense layer, and the caption goes through an embedding layer and an LSTM. The outputs are merged, and the model learns to predict the next word in the caption.\nfrom tensorflow.keras.layers import Input, Dense, LSTM, Embedding, Dropout, add, concatenate, Reshape\n\ninput1 = Input(shape=(1920,))  # Image features from CNN\ninput2 = Input(shape=(max_length,))  # Tokenized caption\n\nimg_features = Dense(256, activation='relu')(input1)\nimg_features_reshaped = Reshape((1, 256))(img_features)\n\nsentence_features = Embedding(vocab_size, 256)(input2)\nmerged = concatenate([img_features_reshaped, sentence_features], axis=1)\nsentence_features = LSTM(256)(merged)\nx = Dropout(0.5)(sentence_features)\nx = add([x, img_features])\nx = Dense(128, activation='relu')(x)\nx = Dropout(0.5)(x)\noutput = Dense(vocab_size, activation='softmax')(x)\n\ncaption_model = Model(inputs=[input1, input2], outputs=output)\ncaption_model.compile(loss='categorical_crossentropy', optimizer='adam')\n\n\n\nI use the CustomDataGenerator to feed the data into the model, and the model is trained with checkpoints, early stopping, and learning rate reduction to avoid overfitting.\nhistory = caption_model.fit(\n        train_generator,\n        epochs=50,\n        validation_data=validation_generator,\n        callbacks=[checkpoint, earlystopping, learning_rate_reduction]\n)\n\n\n\nOnce the model is trained, I can use it to generate captions for unseen images. In the next post, I’ll show how the model performs and how it generates captions for test images.\nStay tuned for more insights into how the model works and its real-world applications!"
+  },
+  {
+    "objectID": "posts/Week_03/index.html#model-architecture",
+    "href": "posts/Week_03/index.html#model-architecture",
+    "title": "Week 3",
+    "section": "",
+    "text": "The model consists of two inputs: one for the image features and another for the tokenized caption. The image features go through a dense layer, and the caption goes through an embedding layer and an LSTM. The outputs are merged, and the model learns to predict the next word in the caption.\nfrom tensorflow.keras.layers import Input, Dense, LSTM, Embedding, Dropout, add, concatenate, Reshape\n\ninput1 = Input(shape=(1920,))  # Image features from CNN\ninput2 = Input(shape=(max_length,))  # Tokenized caption\n\nimg_features = Dense(256, activation='relu')(input1)\nimg_features_reshaped = Reshape((1, 256))(img_features)\n\nsentence_features = Embedding(vocab_size, 256)(input2)\nmerged = concatenate([img_features_reshaped, sentence_features], axis=1)\nsentence_features = LSTM(256)(merged)\nx = Dropout(0.5)(sentence_features)\nx = add([x, img_features])\nx = Dense(128, activation='relu')(x)\nx = Dropout(0.5)(x)\noutput = Dense(vocab_size, activation='softmax')(x)\n\ncaption_model = Model(inputs=[input1, input2], outputs=output)\ncaption_model.compile(loss='categorical_crossentropy', optimizer='adam')"
+  },
+  {
+    "objectID": "posts/Week_03/index.html#training-the-model",
+    "href": "posts/Week_03/index.html#training-the-model",
+    "title": "Week 3",
+    "section": "",
+    "text": "I use the CustomDataGenerator to feed the data into the model, and the model is trained with checkpoints, early stopping, and learning rate reduction to avoid overfitting.\nhistory = caption_model.fit(\n        train_generator,\n        epochs=50,\n        validation_data=validation_generator,\n        callbacks=[checkpoint, earlystopping, learning_rate_reduction]\n)"
+  },
+  {
+    "objectID": "posts/Week_03/index.html#final-thoughts",
+    "href": "posts/Week_03/index.html#final-thoughts",
+    "title": "Week 3",
+    "section": "",
+    "text": "Once the model is trained, I can use it to generate captions for unseen images. In the next post, I’ll show how the model performs and how it generates captions for test images.\nStay tuned for more insights into how the model works and its real-world applications!"
+  },
+  {
+    "objectID": "posts/Week_02/index.html",
+    "href": "posts/Week_02/index.html",
+    "title": "Week 2",
+    "section": "",
+    "text": "In this post, I’ll go through the essential preprocessing steps I took to prepare the image and caption data for the model.\n\n\nFor each image, I resize it and normalize the pixel values to a range between 0 and 1:\nfrom tensorflow.keras.preprocessing.image import load_img, img_to_array\n\ndef readImage(path, img_size=224):\n    img = load_img(path, color_mode='rgb', target_size=(img_size, img_size))\n    img = img_to_array(img)\n    img = img / 255.  # Normalize\n    return img\n\ndef text_preprocessing(data):\n    data['caption'] = data['caption'].apply(lambda x: x.lower())\n    data['caption'] = data['caption'].apply(lambda x: x.replace(\"[^A-Za-z]\", \"\"))\n    data['caption'] = data['caption'].apply(lambda x: x.replace(\"\\s+\", \" \"))\n    data['caption'] = data['caption'].apply(lambda x: \" \".join([word for word in x.split() if len(word) &gt; 1]))\n    data['caption'] = \"startseq \" + data['caption'] + \" endseq\"\n    return data\n\ndata = text_preprocessing(data)\ncaptions = data['caption'].tolist()\ncaptions[:10]\nNext, I will tokenize the captions, splitting them into words and assigning each word a unique integer.\nfrom tensorflow.keras.preprocessing.text import Tokenizer\n\ntokenizer = Tokenizer()\ntokenizer.fit_on_texts(captions)\nvocab_size = len(tokenizer.word_index) + 1  # Include padding token\nmax_length = max(len(caption.split()) for caption in captions)\n\n# Split into train and test\nimages = data['image'].unique().tolist()\nsplit_index = round(0.85 * len(images))\ntrain_images = images[:split_index]\nval_images = images[split_index:]\n\ntrain = data[data['image'].isin(train_images)]\ntest = data[data['image'].isin(val_images)]"
+  },
+  {
+    "objectID": "posts/Week_02/index.html#image-preprocessing",
+    "href": "posts/Week_02/index.html#image-preprocessing",
+    "title": "Week 2",
+    "section": "",
+    "text": "For each image, I resize it and normalize the pixel values to a range between 0 and 1:\nfrom tensorflow.keras.preprocessing.image import load_img, img_to_array\n\ndef readImage(path, img_size=224):\n    img = load_img(path, color_mode='rgb', target_size=(img_size, img_size))\n    img = img_to_array(img)\n    img = img / 255.  # Normalize\n    return img\n\ndef text_preprocessing(data):\n    data['caption'] = data['caption'].apply(lambda x: x.lower())\n    data['caption'] = data['caption'].apply(lambda x: x.replace(\"[^A-Za-z]\", \"\"))\n    data['caption'] = data['caption'].apply(lambda x: x.replace(\"\\s+\", \" \"))\n    data['caption'] = data['caption'].apply(lambda x: \" \".join([word for word in x.split() if len(word) &gt; 1]))\n    data['caption'] = \"startseq \" + data['caption'] + \" endseq\"\n    return data\n\ndata = text_preprocessing(data)\ncaptions = data['caption'].tolist()\ncaptions[:10]\nNext, I will tokenize the captions, splitting them into words and assigning each word a unique integer.\nfrom tensorflow.keras.preprocessing.text import Tokenizer\n\ntokenizer = Tokenizer()\ntokenizer.fit_on_texts(captions)\nvocab_size = len(tokenizer.word_index) + 1  # Include padding token\nmax_length = max(len(caption.split()) for caption in captions)\n\n# Split into train and test\nimages = data['image'].unique().tolist()\nsplit_index = round(0.85 * len(images))\ntrain_images = images[:split_index]\nval_images = images[split_index:]\n\ntrain = data[data['image'].isin(train_images)]\ntest = data[data['image'].isin(val_images)]"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Senior Project Blog",
+    "section": "",
+    "text": "Week 3\n\n\n\n\n\n\nnews\n\n\ncode\n\n\n\n\n\n\n\n\n\nJan 19, 2025\n\n\nScott Townsend\n\n\n\n\n\n\n\n\n\n\n\n\nWeek 2\n\n\n\n\n\n\nnews\n\n\ncode\n\n\n\n\n\n\n\n\n\nJan 19, 2025\n\n\nScott Townsend\n\n\n\n\n\n\n\n\n\n\n\n\nWeek 1\n\n\n\n\n\n\nnews\n\n\nanalysis\n\n\n\n\n\n\n\n\n\nJan 12, 2025\n\n\nScott Townsend\n\n\n\n\n\n\nNo matching items"
   }
 ]

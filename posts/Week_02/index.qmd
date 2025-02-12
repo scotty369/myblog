@@ -5,3 +5,53 @@ date: "2025-01-19"
 categories: [news, code]
 image: "week_2.jpg"
 ---
+
+# Data Preprocessing for Image Captioning
+
+In this post, I’ll go through the essential preprocessing steps I took to prepare the image and caption data for the model.
+
+## Image Preprocessing
+
+For each image, I resize it and normalize the pixel values to a range between 0 and 1:
+
+```python
+from tensorflow.keras.preprocessing.image import load_img, img_to_array
+
+def readImage(path, img_size=224):
+    img = load_img(path, color_mode='rgb', target_size=(img_size, img_size))
+    img = img_to_array(img)
+    img = img / 255.  # Normalize
+    return img
+
+def text_preprocessing(data):
+    data['caption'] = data['caption'].apply(lambda x: x.lower())
+    data['caption'] = data['caption'].apply(lambda x: x.replace("[^A-Za-z]", ""))
+    data['caption'] = data['caption'].apply(lambda x: x.replace("\s+", " "))
+    data['caption'] = data['caption'].apply(lambda x: " ".join([word for word in x.split() if len(word) > 1]))
+    data['caption'] = "startseq " + data['caption'] + " endseq"
+    return data
+
+data = text_preprocessing(data)
+captions = data['caption'].tolist()
+captions[:10]
+```
+
+Next, I will tokenize the captions, splitting them into words and assigning each word a unique integer.
+
+```python
+from tensorflow.keras.preprocessing.text import Tokenizer
+
+tokenizer = Tokenizer()
+tokenizer.fit_on_texts(captions)
+vocab_size = len(tokenizer.word_index) + 1  # Include padding token
+max_length = max(len(caption.split()) for caption in captions)
+
+# Split into train and test
+images = data['image'].unique().tolist()
+split_index = round(0.85 * len(images))
+train_images = images[:split_index]
+val_images = images[split_index:]
+
+train = data[data['image'].isin(train_images)]
+test = data[data['image'].isin(val_images)]
+```

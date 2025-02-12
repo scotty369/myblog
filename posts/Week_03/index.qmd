@@ -5,3 +5,75 @@ date: "2025-01-19"
 categories: [news, code]
 image: "week_2.jpg"
 ---
+
+# Building the CNN-LSTM Model for Image Captioning
+
+In this post, I’ll walk you through the architecture of the model that generates captions for images.
+
+### CNN Feature Extraction
+
+I start by using a pre-trained **DenseNet201** model for feature extraction from the images. This CNN extracts useful features from the images, which will then be used by the LSTM model to generate captions.
+
+```python
+from tensorflow.keras.applications import DenseNet201
+from tensorflow.keras.models import Model
+from tqdm import tqdm
+
+model = DenseNet201()
+fe = Model(inputs=model.input, outputs=model.layers[-2].output)
+
+img_size = 224
+features = {}
+for image in tqdm(data['image'].unique().tolist()):
+    img = load_img(os.path.join(image_path, image), target_size=(img_size, img_size))
+    img = img_to_array(img)
+    img = img / 255.
+    img = np.expand_dims(img, axis=0)
+    feature = fe.predict(img, verbose=0)
+    features[image] = feature
+```
+
+## Model Architecture
+
+The model consists of two inputs: one for the image features and another for the tokenized caption. The image features go through a dense layer, and the caption goes through an embedding layer and an LSTM. The outputs are merged, and the model learns to predict the next word in the caption.
+
+```python
+from tensorflow.keras.layers import Input, Dense, LSTM, Embedding, Dropout, add, concatenate, Reshape
+
+input1 = Input(shape=(1920,))  # Image features from CNN
+input2 = Input(shape=(max_length,))  # Tokenized caption
+
+img_features = Dense(256, activation='relu')(input1)
+img_features_reshaped = Reshape((1, 256))(img_features)
+
+sentence_features = Embedding(vocab_size, 256)(input2)
+merged = concatenate([img_features_reshaped, sentence_features], axis=1)
+sentence_features = LSTM(256)(merged)
+x = Dropout(0.5)(sentence_features)
+x = add([x, img_features])
+x = Dense(128, activation='relu')(x)
+x = Dropout(0.5)(x)
+output = Dense(vocab_size, activation='softmax')(x)
+
+caption_model = Model(inputs=[input1, input2], outputs=output)
+caption_model.compile(loss='categorical_crossentropy', optimizer='adam')
+```
+
+## Training the Model
+
+I use the CustomDataGenerator to feed the data into the model, and the model is trained with checkpoints, early stopping, and learning rate reduction to avoid overfitting.
+
+```python
+history = caption_model.fit(
+        train_generator,
+        epochs=50,
+        validation_data=validation_generator,
+        callbacks=[checkpoint, earlystopping, learning_rate_reduction]
+)
+```
+
+## Final Thoughts
+
+Once the model is trained, I can use it to generate captions for unseen images. In the next post, I’ll show how the model performs and how it generates captions for test images.
+
+Stay tuned for more insights into how the model works and its real-world applications!

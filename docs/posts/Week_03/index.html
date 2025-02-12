@@ -22,6 +22,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -154,8 +188,70 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<section id="building-the-cnn-lstm-model-for-image-captioning" class="level1">
+<h1>Building the CNN-LSTM Model for Image Captioning</h1>
+<p>In this post, I’ll walk you through the architecture of the model that generates captions for images.</p>
+<section id="cnn-feature-extraction" class="level3">
+<h3 class="anchored" data-anchor-id="cnn-feature-extraction">CNN Feature Extraction</h3>
+<p>I start by using a pre-trained <strong>DenseNet201</strong> model for feature extraction from the images. This CNN extracts useful features from the images, which will then be used by the LSTM model to generate captions.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras.applications <span class="im">import</span> DenseNet201</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras.models <span class="im">import</span> Model</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tqdm <span class="im">import</span> tqdm</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> DenseNet201()</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>fe <span class="op">=</span> Model(inputs<span class="op">=</span>model.<span class="bu">input</span>, outputs<span class="op">=</span>model.layers[<span class="op">-</span><span class="dv">2</span>].output)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>img_size <span class="op">=</span> <span class="dv">224</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>features <span class="op">=</span> {}</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> image <span class="kw">in</span> tqdm(data[<span class="st">'image'</span>].unique().tolist()):</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    img <span class="op">=</span> load_img(os.path.join(image_path, image), target_size<span class="op">=</span>(img_size, img_size))</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    img <span class="op">=</span> img_to_array(img)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    img <span class="op">=</span> img <span class="op">/</span> <span class="fl">255.</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    img <span class="op">=</span> np.expand_dims(img, axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    feature <span class="op">=</span> fe.predict(img, verbose<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    features[image] <span class="op">=</span> feature</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="model-architecture" class="level2">
+<h2 class="anchored" data-anchor-id="model-architecture">Model Architecture</h2>
+<p>The model consists of two inputs: one for the image features and another for the tokenized caption. The image features go through a dense layer, and the caption goes through an embedding layer and an LSTM. The outputs are merged, and the model learns to predict the next word in the caption.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras.layers <span class="im">import</span> Input, Dense, LSTM, Embedding, Dropout, add, concatenate, Reshape</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>input1 <span class="op">=</span> Input(shape<span class="op">=</span>(<span class="dv">1920</span>,))  <span class="co"># Image features from CNN</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>input2 <span class="op">=</span> Input(shape<span class="op">=</span>(max_length,))  <span class="co"># Tokenized caption</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>img_features <span class="op">=</span> Dense(<span class="dv">256</span>, activation<span class="op">=</span><span class="st">'relu'</span>)(input1)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>img_features_reshaped <span class="op">=</span> Reshape((<span class="dv">1</span>, <span class="dv">256</span>))(img_features)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>sentence_features <span class="op">=</span> Embedding(vocab_size, <span class="dv">256</span>)(input2)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>merged <span class="op">=</span> concatenate([img_features_reshaped, sentence_features], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>sentence_features <span class="op">=</span> LSTM(<span class="dv">256</span>)(merged)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> Dropout(<span class="fl">0.5</span>)(sentence_features)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> add([x, img_features])</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> Dense(<span class="dv">128</span>, activation<span class="op">=</span><span class="st">'relu'</span>)(x)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> Dropout(<span class="fl">0.5</span>)(x)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>output <span class="op">=</span> Dense(vocab_size, activation<span class="op">=</span><span class="st">'softmax'</span>)(x)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>caption_model <span class="op">=</span> Model(inputs<span class="op">=</span>[input1, input2], outputs<span class="op">=</span>output)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>caption_model.<span class="bu">compile</span>(loss<span class="op">=</span><span class="st">'categorical_crossentropy'</span>, optimizer<span class="op">=</span><span class="st">'adam'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="training-the-model" class="level2">
+<h2 class="anchored" data-anchor-id="training-the-model">Training the Model</h2>
+<p>I use the CustomDataGenerator to feed the data into the model, and the model is trained with checkpoints, early stopping, and learning rate reduction to avoid overfitting.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>history <span class="op">=</span> caption_model.fit(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>        train_generator,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        epochs<span class="op">=</span><span class="dv">50</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        validation_data<span class="op">=</span>validation_generator,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        callbacks<span class="op">=</span>[checkpoint, earlystopping, learning_rate_reduction]</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="final-thoughts" class="level2">
+<h2 class="anchored" data-anchor-id="final-thoughts">Final Thoughts</h2>
+<p>Once the model is trained, I can use it to generate captions for unseen images. In the next post, I’ll show how the model performs and how it generates captions for test images.</p>
+<p>Stay tuned for more insights into how the model works and its real-world applications!</p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

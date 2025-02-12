@@ -5,3 +5,60 @@ date: "2025-01-12"
 categories: [news, analysis]
 image: "abstract_face.jpg"
 ---
+
+# Senior Data Science Project: Image Captioning
+
+## Introduction
+
+As part of my Senior Data Science Project, I'm creating a tool that automatically generates captions for images. This tool will help visually impaired individuals understand pictures and streamline tasks like photo tagging and social media captioning. 
+
+The model will be trained on the **Flickr8k** dataset, which contains thousands of images paired with captions. The goal is to build a model that can look at an image and generate a relevant description using machine learning techniques.
+
+## Project Deliverables
+
+The following deliverables are part of this project:
+
+- **Cleaned Data**: Organize the dataset by ensuring that images and captions are properly matched.
+- **Working Model**: A model that extracts features from images (CNN) and generates captions (LSTM/Transformer).
+- **Performance Check**: Evaluate how well the captions align with the images.
+- **Interactive Demo**: A tool to upload an image and receive a generated caption.
+- **Visuals**: Graphs and diagrams showing the model’s performance and where it focuses in the image.
+- **Write-Up**: A brief explanation of the project and its potential applications.
+
+## Code Example: Data Loading and Preprocessing
+
+First, I load the dataset and ensure that the images and captions are properly matched:
+
+```python
+import pandas as pd
+import os
+
+# Load dataset
+caption_file = "/path/to/captions.txt"
+try:
+    data = pd.read_csv(caption_file)
+    print("Data loaded successfully")
+except FileNotFoundError:
+    print(f"Error: The file {caption_file} was not found.")
+    data = pd.DataFrame()
+
+data.head()
+
+# Remove duplicates
+if data.duplicated().any():
+    print(f"Found {data.duplicated().sum()} duplicate rows. Removing duplicates...")
+    data = data.drop_duplicates()
+
+# Handle missing captions
+if data['caption'].isnull().any():
+    print(f"Found {data['caption'].isnull().sum()} missing captions. Replacing with 'No caption'.")
+    data['caption'] = data['caption'].fillna("No caption")
+
+# Check for invalid image paths
+valid_image_paths = data['image'].apply(lambda x: os.path.exists(os.path.join(image_path, x)))
+if not valid_image_paths.all():
+    print(f"Found {(~valid_image_paths).sum()} invalid image paths. Removing these rows...")
+    data = data[valid_image_paths]
+```
+
+Stay tuned for the next post where I'll dive into the data preprocessing for text and image features!
