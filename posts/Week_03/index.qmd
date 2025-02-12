@@ -3,7 +3,7 @@ title: "Week 3"
 author: "Scott Townsend"
 date: "2025-01-19"
 categories: [news, code]
-image: "week_2.jpg"
+image: "Post3.jpg"
 ---
 
 # Building the CNN-LSTM Model for Image Captioning

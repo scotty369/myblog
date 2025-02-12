@@ -3,7 +3,7 @@ title: "Week 2"
 author: "Scott Townsend"
 date: "2025-01-19"
 categories: [news, code]
-image: "word.png"
+image: "Post2.jpeg"
 ---
 
 # Data Preprocessing for Image Captioning
