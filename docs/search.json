@@ -96,5 +96,12 @@
     "title": "Senior Project Blog",
     "section": "",
     "text": "Week 3\n\n\n\n\n\n\nnews\n\n\ncode\n\n\n\n\n\n\n\n\n\nJan 19, 2025\n\n\nScott Townsend\n\n\n\n\n\n\n\n\n\n\n\n\nWeek 2\n\n\n\n\n\n\nnews\n\n\ncode\n\n\n\n\n\n\n\n\n\nJan 19, 2025\n\n\nScott Townsend\n\n\n\n\n\n\n\n\n\n\n\n\nWeek 1\n\n\n\n\n\n\nnews\n\n\nanalysis\n\n\n\n\n\n\n\n\n\nJan 12, 2025\n\n\nScott Townsend\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "projects.html",
+    "href": "projects.html",
+    "title": "Projects",
+    "section": "",
+    "text": "Analyzed Netflix, Hulu, Disney+, and Amazon content libraries to uncover trends in movie durations, genres, and ratings using Polars and Pandas.\nVisualized insights with Seaborn, Matplotlib, and Plotly, including genre popularity, rating distributions, and country-wise content production.\nBuilt interactive dashboards and statistical summaries to explore streaming service content trends and inform data-driven decisions.\n\n\n\nDeveloped a deep learning model to generate descriptive captions for images, aiding visually impaired individuals and automating social media captioning.\nImplemented a Convolutional Neural Network (CNN) for image feature extraction (VGG16) and a sequence model (LSTM/Transformer) for caption generation.\nVisualized model attention areas with heatmaps and presented insights through data visualizations.\n\n\n\nDeveloped interactive visualizations in Python (Matplotlib, Plotly) to highlight trends in the demographics of offenders and victims.\nApplied data wrangling techniques to identify patterns and trends, offering actionable insights into public safety strategies.\nAnalyzed offender-victim relationships to uncover societal trends influencing crime rates.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWeek 3\n\n\n\n\n\n\nnews\n\n\ncode\n\n\n\n\n\n\n\n\n\nJan 19, 2025\n\n\nScott Townsend\n\n\n\n\n\n\n\n\n\n\n\n\nWeek 2\n\n\n\n\n\n\nnews\n\n\ncode\n\n\n\n\n\n\n\n\n\nJan 19, 2025\n\n\nScott Townsend\n\n\n\n\n\n\n\n\n\n\n\n\nWeek 1\n\n\n\n\n\n\nnews\n\n\nanalysis\n\n\n\n\n\n\n\n\n\nJan 12, 2025\n\n\nScott Townsend\n\n\n\n\n\n\nNo matching items"
   }
 ]
