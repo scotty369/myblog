@@ -11,9 +11,10 @@ website:
         href: about.qmd 
       - icon: github
         href: https://github.com/scotty369
-format:
-  html:
-    theme: cosmo
+      - icon: linkedin
+        href: https://www.linkedin.com/in/scott-townsend-0ab515262/
+html:
+    theme: slate
     css: styles.css
 
 

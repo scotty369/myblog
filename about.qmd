@@ -3,7 +3,7 @@ title: "Scott Townsend"
 image: Profile.jpg
 description-meta: Data Science Portfolio
 about:
-  template: trestles
+  template: jolla
   links:
     - icon: code-slash
       text: Projects
