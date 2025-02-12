@@ -1,0 +1,55 @@
+---
+title: "Projects"
+listing:
+  contents: posts
+  sort: "date desc"
+  type: default
+  categories: true
+  sort-ui: false
+  filter-ui: false
+page-layout: full
+title-block-banner: true
+---
+
+<!-- PERSONAL PROJECTS : 2ND BULLET -->
+\begin{large}
+{\bf SELECTED PROJECTS}
+\vspace{3pt}
+  \hrule
+  \begin{multicols}{2}
+    \begin{flushleft}\textit{\href{https://github.com/scotty369/Streaming_Services}{Streaming Services Data Analysis}}\end{flushleft}
+    \begin{flushright}January 2025-Present\end{flushright}
+  \end{multicols}
+  \vspace{-0.17cm}
+\end{large}
+* Analyzed Netflix, Hulu, Disney+, and Amazon content libraries to uncover trends in movie durations, genres, and ratings using Polars and Pandas.
+* Visualized insights with Seaborn, Matplotlib, and Plotly, including genre popularity, rating distributions, and country-wise content production.
+* Built interactive dashboards and statistical summaries to explore streaming service content trends and inform data-driven decisions.
+
+\vspace{7pt}
+
+<!-- PERSONAL PROJECTS : 3RD BULLET -->
+\begin{large}
+  \begin{multicols}{2}
+    \begin{flushleft}\textit{\href{https://github.com/scotty369/Senior-Data-Science-Project}{Image Captioning Tool for Visually Impaired Users}}\end{flushleft}
+    \begin{flushright}December 2024-Present\end{flushright}
+  \end{multicols}
+  \vspace{-0.17cm}
+\end{large}
+* Developed a deep learning model to generate descriptive captions for images, aiding visually impaired individuals and automating social media captioning.
+* Implemented a Convolutional Neural Network (CNN) for image feature extraction (VGG16) and a sequence model (LSTM/Transformer) for caption generation.
+* Visualized model attention areas with heatmaps and presented insights through data visualizations.
+
+\vspace{7pt}
+
+<!-- PERSONAL PROJECTS : 4TH BULLET -->
+\begin{large}
+  \begin{multicols}{2}
+    \begin{flushleft}\textit{\href{https://scotty369.github.io/Personal----Projects/}{Criminal Incident Data Analysis}}\end{flushleft}
+    \begin{flushright}November 2024-December 2024\end{flushright}
+  \end{multicols}
+  \vspace{-0.17cm}
+\end{large}
+* Developed interactive visualizations in **Python** (Matplotlib, Plotly) to highlight trends in the demographics of offenders and victims.
+* Applied **data wrangling** techniques to identify patterns and trends, offering actionable insights into public safety strategies.
+* Analyzed offender-victim relationships to uncover societal trends influencing crime rates.
