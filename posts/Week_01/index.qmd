@@ -1,7 +1,7 @@
 ---
 title: "Week 1"
 author: "Scott Townsend"
-date: "2025-01-12"
+date: "2025-01-27"
 categories: [news, analysis]
 image: "flickr.jpg"
 ---
