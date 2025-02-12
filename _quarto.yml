@@ -8,14 +8,14 @@ website:
   navbar:
     right:
       - about.qmd 
+      - href: projects.qmd
+        text: Projects
+      - text: Resume
+        href: files/resume.pdf
       - icon: github
         href: https://github.com/scotty369
       - icon: linkedin
         href: https://www.linkedin.com/in/scott-townsend-0ab515262/
-      - href: projects.qmd
-        text: projects
-      - text: Resume
-        href: files/resume.pdf
 html:
     theme: slate
     css: styles.css
