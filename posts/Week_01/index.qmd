@@ -3,7 +3,7 @@ title: "Week 1"
 author: "Scott Townsend"
 date: "2025-01-12"
 categories: [news, analysis]
-image: "abstract_face.jpg"
+image: "flickr.jpg"
 ---
 
 # Senior Data Science Project: Image Captioning
