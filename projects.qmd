@@ -1,0 +1,38 @@
+---
+title: "📚 Projects"
+format: html
+---
+
+## My Current Projects  
+
+A collection of my personal projects showcasing my work in **data analysis, statistical modeling, and machine learning**.  
+
+### 🔍 Featured Projects  
+
+- **[Streaming Services Data Analysis](https://github.com/scotty369/Streaming_Services)** *(January 2025 - Present)*  
+  *Analyzed Netflix, Hulu, Disney+, and Amazon content libraries to uncover trends in movie durations, genres, and ratings.*  
+  - Utilized **Polars** and **Pandas** for efficient data processing.  
+  - Visualized insights with **Seaborn, Matplotlib, and Plotly**, exploring genre popularity, rating distributions, and country-wise content production.  
+  - Built **interactive dashboards** and statistical summaries to inform data-driven decisions.  
+
+- **[Image Captioning Tool for Visually Impaired Users](https://github.com/scotty369/Senior-Data-Science-Project)** *(December 2024 - Present)*  
+  *Developed a deep learning model to generate descriptive captions for images, aiding visually impaired individuals and automating social media captioning.*  
+  - Implemented a **CNN (VGG16)** for image feature extraction and an **LSTM/Transformer** for caption generation.  
+  - Visualized model attention areas using **heatmaps** and presented insights through data visualizations.  
+
+- **[Crime Analysis](https://github.com/scotty369/Personal----Projects/blob/main/README.md)**  
+  *Exploring crime trends through data analysis and visualization.* 
+  Developed interactive visualizations in **Python** (Matplotlib, Plotly) to highlight trends in the demographics of offenders and victims.
+    * Applied **data wrangling** techniques to identify patterns and trends, offering actionable insights into public safety strategies.
+    * Analyzed offender-victim relationships to uncover societal trends influencing crime rates. 
+
+- **[Student Performance Analysis](https://github.com/scotty369/DS350_FA24_Townsend_Scott/blob/master/week_14/Semester%20Project.html.md)**  
+  *Analyzing factors affecting student academic performance.*  
+
+- **[Student Performance Predictive ML Model](https://colab.research.google.com/drive/1romN7rSYlLUdeQDgiWT-y3XRiqSOpjlc)**  
+  *Building a predictive model to forecast student success based on historical data.*  
+
+- **[Population Growth Analysis](https://github.com/scotty369/DS350_FA24_Townsend_Scott/blob/master/week_09/W09%20Task%20-%20Data%20Search.html.md)**  
+  *Investigating population growth trends using statistical methods.*  
+
+💡 *Feel free to explore my projects for detailed analysis and visualization.*  
