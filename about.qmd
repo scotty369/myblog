@@ -2,7 +2,7 @@
 title: "Scott Townsend"
 image: Profile.jpg
 about:
-  template: jolla
+  template: solana
   links:
     - icon: code-slash
       text: Projects
