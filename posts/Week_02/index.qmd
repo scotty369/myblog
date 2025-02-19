@@ -6,6 +6,13 @@ categories: [news, code]
 image: "Post2.jpeg"
 ---
 
+# Interesting statistics:
+
+Total captions: 40445
+Average caption length: 11.78 words
+Max caption length: 38 words
+Min caption length: 1 words
+
 # Tokenizing Captions
 
 This section handles the preparation of textual data by converting image captions into sequences of integers. It also splits the dataset into training and validation sets, ensuring that 85% of the images are used for training.
@@ -114,3 +121,5 @@ class CustomDataGenerator(Sequence):
 
         return X1, X2, y
 ```
+
+Next week we will look at the model creation and the image and text feature layers! 
