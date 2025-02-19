@@ -21,7 +21,6 @@ The following deliverables are part of this project:
 - **Cleaned Data**: Organize the dataset by ensuring that images and captions are properly matched.
 - **Working Model**: A model that extracts features from images (CNN) and generates captions (LSTM/Transformer).
 - **Performance Check**: Evaluate how well the captions align with the images.
-- **Interactive Demo**: A tool to upload an image and receive a generated caption.
 - **Visuals**: Graphs and diagrams showing the model’s performance and where it focuses in the image.
 - **Write-Up**: A brief explanation of the project and its potential applications.
 
