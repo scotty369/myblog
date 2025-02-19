@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  title: "Blog Posts"
+  title: "scotty369"
   page-navigation: true
   description: "This is Scott Townsend's personal Blog."
   navbar:
@@ -11,6 +11,8 @@ website:
       - about.qmd 
       - href: projects.qmd
         text: Projects
+      - href: blog.qmd
+        text: Blog
       - text: Resume
         href: files/resume.pdf
       - icon: github
@@ -19,7 +21,7 @@ website:
         href: https://www.linkedin.com/in/scott-townsend-0ab515262/
 format:
   html:
-    theme: litera
+    theme: lux
     css: styles.css
 
 

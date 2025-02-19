@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Blog Posts - My Projects</title>
+<title>Blog Posts</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,24 +23,22 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -68,77 +66,19 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
 
-    const options = {
-      valueNames: ['listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+  <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Blog Posts</span>
     </a>
   </div>
@@ -149,19 +89,15 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">Scott Townsend</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./projects.html" aria-current="page"> 
+    <a class="nav-link" href="../../projects.html"> 
 <span class="menu-text">Projects</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./blog.html"> 
-<span class="menu-text">Blog</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./files/resume.pdf"> 
+    <a class="nav-link" href="../../files/resume.pdf"> 
 <span class="menu-text">Resume</span></a>
   </li>  
   <li class="nav-item compact">
@@ -182,156 +118,157 @@ window.Quarto = {
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">My Projects</h1>
-                      </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta column-page-left">
-
-      
-    
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(5)</span></div></div></div>
+    
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
 
 
 
 
+<section id="criminal-incident-analysis" class="level1">
+<h1><strong><em>Criminal Incident Analysis</em></strong></h1>
+<section id="analysis-overview" class="level2">
+<h2 class="anchored" data-anchor-id="analysis-overview"><em>Analysis Overview</em></h2>
+<p>The analysis is structured into several key sections, each exploring a different aspect of criminal incidents. Below are the main insights drawn from the data:</p>
+<section id="reported-locations-of-incidents" class="level3">
+<h3 class="anchored" data-anchor-id="reported-locations-of-incidents"><em>1. Reported Locations of Incidents</em></h3>
+<p>This visualization provides an overview of the frequency of criminal incidents based on their location. Understanding where crimes occur helps in targeting both public and private safety initiatives.</p>
+<p><img src="images/newplot.png" class="img-fluid" width="500"></p>
+<section id="key-insight" class="level4">
+<h4 class="anchored" data-anchor-id="key-insight">Key Insight:</h4>
+<ul>
+<li><strong>Residential areas</strong> are the most common settings for criminal incidents, followed closely by <strong>public locations</strong> such as streets and sidewalks. These findings underscore the need for improved safety measures in both private homes and public spaces.</li>
+</ul>
+</section>
+</section>
+<section id="age-ranges-of-offenders-vs-victims" class="level3">
+<h3 class="anchored" data-anchor-id="age-ranges-of-offenders-vs-victims"><em>2. Age Ranges of Offenders vs Victims</em></h3>
+<p>The following charts show the age distributions of both offenders and victims, offering insights into the typical age groups involved in these incidents.</p>
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="images/newplot (9).png" class="img-fluid quarto-figure quarto-figure-left figure-img" width="500"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="images/newplot (10).png" class="img-fluid quarto-figure quarto-figure-left figure-img" width="500"></p>
+</figure>
+</div>
+<section id="key-insight-1" class="level4">
+<h4 class="anchored" data-anchor-id="key-insight-1">Key Insight:</h4>
+<ul>
+<li><p><strong>Offenders</strong>: The most common age group among offenders is <strong>20–29</strong>, followed by <strong>30–39</strong>. This indicates that younger adults are more likely to be involved in criminal activities.</p></li>
+<li><p><strong>Victims</strong>: Victimization also peaks in the <strong>20–29</strong> age group, suggesting a strong overlap between the ages of offenders and victims. This may reflect social or environmental factors influencing both offending and victimization patterns.</p></li>
+</ul>
+</section>
+</section>
+<section id="ethnicities-of-the-offenders-vs-victims" class="level3">
+<h3 class="anchored" data-anchor-id="ethnicities-of-the-offenders-vs-victims"><em>3. Ethnicities of the Offenders vs Victims</em></h3>
+<p>The charts below compare the ethnicities of offenders and victims to reveal potential patterns of racial disparities in criminal incidents.</p>
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="images/newplot (1).png" class="img-fluid figure-img" width="500"></p>
+<figcaption>Ethnicties of the Offenders</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="images/newplot (11).png" class="img-fluid quarto-figure quarto-figure-left figure-img" width="500"></p>
+</figure>
+</div>
+<section id="key-insight-2" class="level4">
+<h4 class="anchored" data-anchor-id="key-insight-2">Key Insight:</h4>
+<ul>
+<li>The majority of both <strong>offenders</strong> and <strong>victims</strong> are categorized as <strong>non-Hispanic and non-Latino</strong>. This suggests that ethnic groups outside of the Hispanic/Latino community are more frequently involved in criminal incidents. Further analysis is needed to explore the sociocultural and systemic factors behind these patterns.</li>
+</ul>
+</section>
+</section>
+<section id="races-of-offenders-vs-victims" class="level3">
+<h3 class="anchored" data-anchor-id="races-of-offenders-vs-victims">4. <em>Races of Offenders vs Victims</em></h3>
+<p>This analysis explores the racial distribution of offenders and victims, investigating whether race-related disparities are present.</p>
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="images/newplot (7).png" class="img-fluid quarto-figure quarto-figure-left figure-img" width="500"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="images/newplot (8)-2.png" class="img-fluid quarto-figure quarto-figure-left figure-img" width="500"></p>
+</figure>
+</div>
+<section id="key-insight-3" class="level4">
+<h4 class="anchored" data-anchor-id="key-insight-3">Key Insight:</h4>
+<ul>
+<li><p><strong>Offenders</strong>: Both <strong>White</strong> and <strong>African American</strong> individuals are most commonly represented among offenders, highlighting possible broader societal and economic influences.</p></li>
+<li><p><strong>Victims</strong>: <strong>White</strong> individuals appear to be more frequently victimized, suggesting potential interactions between race, geographic location, and social dynamics. This warrants further investigation into how systemic factors contribute to these disparities.</p></li>
+</ul>
+</section>
+</section>
+<section id="types-of-offenses-committed" class="level3">
+<h3 class="anchored" data-anchor-id="types-of-offenses-committed"><em>5. Types of Offenses Committed</em></h3>
+<p>This chart categorizes the types of offenses involved in the reported incidents, giving us a detailed breakdown of criminal activity.</p>
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="images/newplot (4).png" class="img-fluid quarto-figure quarto-figure-left figure-img" width="500"></p>
+</figure>
+</div>
+<section id="key-insight-4" class="level4">
+<h4 class="anchored" data-anchor-id="key-insight-4">Key Insight:</h4>
+<ul>
+<li><strong>Property destruction</strong> is the most prevalent offense, followed by <strong>simple assaults</strong>, <strong>breaking and entering</strong>, and <strong>drug-related crimes</strong>. This breakdown provides a clearer picture of the types of criminal activities most commonly occurring in these incidents.</li>
+</ul>
+</section>
+</section>
+<section id="weapons-used" class="level3">
+<h3 class="anchored" data-anchor-id="weapons-used"><em>6. Weapons Used</em></h3>
+<p>The following chart provides an overview of the types of weapons used during criminal incidents, offering valuable insights into the role of weaponry in violent crime.</p>
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="images/newplot (5).png" class="img-fluid quarto-figure quarto-figure-left figure-img" width="500"></p>
+</figure>
+</div>
+<section id="key-insight-5" class="level4">
+<h4 class="anchored" data-anchor-id="key-insight-5">Key Insight:</h4>
+<ul>
+<li><strong>Personal weapons</strong> (hands, fists, etc.) are the most frequently used in incidents, followed by <strong>firearms</strong> and <strong>knives</strong>. The prominence of physical altercations emphasizes the need for preventive measures around conflict de-escalation, while the prevalence of firearms and knives highlights the importance of effective weapon control.</li>
+</ul>
+</section>
+</section>
+<section id="relationship-between-offenders-and-victims" class="level3">
+<h3 class="anchored" data-anchor-id="relationship-between-offenders-and-victims"><em>7. Relationship Between Offenders and Victims</em></h3>
+<p>This chart examines the relationship dynamics between offenders and victims, uncovering patterns in how these relationships might influence criminal behavior.</p>
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="images/newplot (6).png" class="img-fluid quarto-figure quarto-figure-left figure-img" width="500"></p>
+</figure>
+</div>
+<section id="key-insight-6" class="level4">
+<h4 class="anchored" data-anchor-id="key-insight-6">Key Insight:</h4>
+<ul>
+<li>The most common relationship between offenders and victims is that of <strong>strangers</strong>, where no prior connection exists between the parties. Other significant relationships include <strong>boyfriends/girlfriends</strong>, <strong>friends</strong>, <strong>spouses</strong>, and <strong>acquaintances</strong>. This indicates a range of scenarios, from random violence to incidents stemming from interpersonal conflicts.</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion"><em>Conclusion</em></h2>
+<p>This analysis uncovers several critical patterns in criminal activity related to gun violence. Key findings include:</p>
+<ul>
+<li><p>Younger individuals, particularly in their 20s and 30s, are more likely to be involved both as offenders and victims.</p></li>
+<li><p>The most common offenses involve property destruction, assaults, and drug-related crimes.</p></li>
+<li><p>Both <strong>White</strong> and <strong>African American</strong> individuals are most commonly represented among offenders, while <strong>White</strong> individuals are more frequently victimized.</p></li>
+<li><p><strong>Personal weapons</strong> and <strong>firearms</strong> are the most common weapons used in violent incidents.</p></li>
+</ul>
+<p>These insights are crucial for understanding the social dynamics behind gun violence. By further exploring these trends and integrating additional datasets, law enforcement agencies and policymakers can make more informed decisions about crime prevention, resource allocation, and public safety initiatives.</p>
 
 
+</section>
+</section>
 
-
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-listing-file-modified-sort="1739927595245">
-<div class="thumbnail">
-<p><a href="./projects/Streaming_Services/index.html" class="no-external"></a></p><a href="./projects/Streaming_Services/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./projects/Streaming_Services/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./projects/Streaming_Services/index.html" class="no-external"></a>
-</h3>
-<div class="listing-subtitle">
-<a href="./projects/Streaming_Services/index.html" class="no-external"></a>
-</div>
-<div class="listing-description">
-<a href="./projects/Streaming_Services/index.html" class="no-external"></a>
-</div>
-</div>
-<div class="metadata">
-<p><a href="./projects/Streaming_Services/index.html" class="no-external"></a></p><a href="./projects/Streaming_Services/index.html" class="no-external">
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-listing-file-modified-sort="1739927590617">
-<div class="thumbnail">
-<p><a href="./projects/Population_Growth/index.html" class="no-external"></a></p><a href="./projects/Population_Growth/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./projects/Population_Growth/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./projects/Population_Growth/index.html" class="no-external"></a>
-</h3>
-<div class="listing-subtitle">
-<a href="./projects/Population_Growth/index.html" class="no-external"></a>
-</div>
-<div class="listing-description">
-<a href="./projects/Population_Growth/index.html" class="no-external"></a>
-</div>
-</div>
-<div class="metadata">
-<p><a href="./projects/Population_Growth/index.html" class="no-external"></a></p><a href="./projects/Population_Growth/index.html" class="no-external">
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-listing-file-modified-sort="1739927601216">
-<div class="thumbnail">
-<p><a href="./projects/Student_Performance/index.html" class="no-external"></a></p><a href="./projects/Student_Performance/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./projects/Student_Performance/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./projects/Student_Performance/index.html" class="no-external"></a>
-</h3>
-<div class="listing-subtitle">
-<a href="./projects/Student_Performance/index.html" class="no-external"></a>
-</div>
-<div class="listing-description">
-<a href="./projects/Student_Performance/index.html" class="no-external"></a>
-</div>
-</div>
-<div class="metadata">
-<p><a href="./projects/Student_Performance/index.html" class="no-external"></a></p><a href="./projects/Student_Performance/index.html" class="no-external">
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-listing-file-modified-sort="1739927773767" data-listing-reading-time-sort="4" data-listing-word-count-sort="696">
-<div class="thumbnail">
-<p><a href="./projects/Crime_Analysis/index.html" class="no-external"></a></p><a href="./projects/Crime_Analysis/index.html" class="no-external">
-<p class="card-img-top"><img src="projects/Crime_Analysis/images/newplot.png"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./projects/Crime_Analysis/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./projects/Crime_Analysis/index.html" class="no-external"><strong><em>Criminal Incident Analysis</em></strong></a>
-</h3>
-<div class="listing-subtitle">
-<a href="./projects/Crime_Analysis/index.html" class="no-external"></a>
-</div>
-<div class="listing-description">
-<a href="./projects/Crime_Analysis/index.html" class="no-external">The analysis is structured into several key sections, each exploring a different aspect of criminal incidents. Below are the main insights drawn from the data:</a>
-</div>
-</div>
-<div class="metadata">
-<p><a href="./projects/Crime_Analysis/index.html" class="no-external"></a></p><a href="./projects/Crime_Analysis/index.html" class="no-external">
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="4" data-listing-file-modified-sort="1739927586298">
-<div class="thumbnail">
-<p><a href="./projects/Image_Caption/index.html" class="no-external"></a></p><a href="./projects/Image_Caption/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./projects/Image_Caption/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./projects/Image_Caption/index.html" class="no-external"></a>
-</h3>
-<div class="listing-subtitle">
-<a href="./projects/Image_Caption/index.html" class="no-external"></a>
-</div>
-<div class="listing-description">
-<a href="./projects/Image_Caption/index.html" class="no-external"></a>
-</div>
-</div>
-<div class="metadata">
-<p><a href="./projects/Image_Caption/index.html" class="no-external"></a></p><a href="./projects/Image_Caption/index.html" class="no-external">
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
