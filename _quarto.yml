@@ -4,6 +4,7 @@ project:
 
 website:
   title: "Blog Posts"
+  page-navigation: true
   description: "This is Scott Townsend's personal Blog."
   navbar:
     right:
@@ -16,8 +17,9 @@ website:
         href: https://github.com/scotty369
       - icon: linkedin
         href: https://www.linkedin.com/in/scott-townsend-0ab515262/
-html:
-    theme: journal
+format:
+  html:
+    theme: litera
     css: styles.css
 
 
