@@ -6,52 +6,111 @@ categories: [news, code]
 image: "Post2.jpeg"
 ---
 
-# Data Preprocessing for Image Captioning
+# Tokenizing Captions
 
-In this post, I’ll go through the essential preprocessing steps I took to prepare the image and caption data for the model.
-
-## Image Preprocessing
-
-For each image, I resize it and normalize the pixel values to a range between 0 and 1:
+This section handles the preparation of textual data by converting image captions into sequences of integers. It also splits the dataset into training and validation sets, ensuring that 85% of the images are used for training.
 
 ```python
-from tensorflow.keras.preprocessing.image import load_img, img_to_array
-
-def readImage(path, img_size=224):
-    img = load_img(path, color_mode='rgb', target_size=(img_size, img_size))
-    img = img_to_array(img)
-    img = img / 255.  # Normalize
-    return img
-
-def text_preprocessing(data):
-    data['caption'] = data['caption'].apply(lambda x: x.lower())
-    data['caption'] = data['caption'].apply(lambda x: x.replace("[^A-Za-z]", ""))
-    data['caption'] = data['caption'].apply(lambda x: x.replace("\s+", " "))
-    data['caption'] = data['caption'].apply(lambda x: " ".join([word for word in x.split() if len(word) > 1]))
-    data['caption'] = "startseq " + data['caption'] + " endseq"
-    return data
-
-data = text_preprocessing(data)
-captions = data['caption'].tolist()
-captions[:10]
-```
-
-Next, I will tokenize the captions, splitting them into words and assigning each word a unique integer.
-
-```python
-from tensorflow.keras.preprocessing.text import Tokenizer
-
+# Tokenize captions
 tokenizer = Tokenizer()
 tokenizer.fit_on_texts(captions)
-vocab_size = len(tokenizer.word_index) + 1  # Include padding token
+vocab_size = len(tokenizer.word_index) + 1
 max_length = max(len(caption.split()) for caption in captions)
 
-# Split into train and test
+# Train-test split
 images = data['image'].unique().tolist()
-split_index = round(0.85 * len(images))
+nimages = len(images)
+
+split_index = round(0.85 * nimages)
 train_images = images[:split_index]
 val_images = images[split_index:]
 
 train = data[data['image'].isin(train_images)]
 test = data[data['image'].isin(val_images)]
+
+train.reset_index(inplace=True, drop=True)
+test.reset_index(inplace=True, drop=True)
+
+tokenizer.texts_to_sequences([captions[1]])[0]
+```
+
+# Image Feature Extraction
+
+This section uses the DenseNet201 model to extract meaningful image features, which are saved in a dictionary for use during model training. Each image is resized, normalized, and converted into a format compatible with the model.
+
+```python
+# Use DenseNet201 for image feature extraction
+model = DenseNet201()
+fe = Model(inputs=model.input, outputs=model.layers[-2].output)
+
+img_size = 224
+features = {}
+for image in tqdm(data['image'].unique().tolist()):
+    img = load_img(os.path.join(image_path, image), target_size=(img_size, img_size))
+    img = img_to_array(img)
+    img = img / 255.
+    img = np.expand_dims(img, axis=0)
+    feature = fe.predict(img, verbose=0)
+    features[image] = feature
+```
+
+# Custom Data Generator
+
+This custom data generator class facilitates efficient model training by yielding batches of data, including image features and tokenized caption sequences. It handles batch creation, shuffling, and ensures compatibility with the model's input format.
+
+```python
+class CustomDataGenerator(Sequence):
+
+    def __init__(self, df, X_col, y_col, batch_size, directory, tokenizer,
+                 vocab_size, max_length, features, shuffle=True):
+
+        self.df = df.copy()
+        self.X_col = X_col
+        self.y_col = y_col
+        self.directory = directory
+        self.batch_size = batch_size
+        self.tokenizer = tokenizer
+        self.vocab_size = vocab_size
+        self.max_length = max_length
+        self.features = features
+        self.shuffle = shuffle
+        self.n = len(self.df)
+
+    def on_epoch_end(self):
+        if self.shuffle:
+            self.df = self.df.sample(frac=1).reset_index(drop=True)
+
+    def __len__(self):
+        return self.n // self.batch_size
+
+    def __getitem__(self, index):
+
+        batch = self.df.iloc[index * self.batch_size:(index + 1) * self.batch_size, :]
+        X1, X2, y = self.__get_data(batch)
+        return (X1, X2), y
+
+    def __get_data(self, batch):
+
+        X1, X2, y = list(), list(), list()
+
+        images = batch[self.X_col].tolist()
+
+        for image in images:
+            feature = self.features[image][0]
+
+            captions = batch.loc[batch[self.X_col] == image, self.y_col].tolist()
+            for caption in captions:
+                seq = self.tokenizer.texts_to_sequences([caption])[0]
+
+                for i in range(1, len(seq)):
+                    in_seq, out_seq = seq[:i], seq[i]
+                    in_seq = pad_sequences([in_seq], maxlen=self.max_length)[0]
+                    out_seq = to_categorical([out_seq], num_classes=self.vocab_size)[0]
+                    X1.append(feature)
+                    X2.append(in_seq)
+                    y.append(out_seq)
+
+        X1, X2, y = np.array(X1), np.array(X2), np.array(y)
+
+        return X1, X2, y
 ```
