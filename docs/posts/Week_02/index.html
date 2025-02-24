@@ -208,102 +208,102 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="tokenizing-captions" class="level1">
 <h1>Tokenizing Captions</h1>
 <p>This section handles the preparation of textual data by converting image captions into sequences of integers. It also splits the dataset into training and validation sets, ensuring that 85% of the images are used for training.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tokenize captions</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>tokenizer <span class="op">=</span> Tokenizer()</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>tokenizer.fit_on_texts(captions)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>vocab_size <span class="op">=</span> <span class="bu">len</span>(tokenizer.word_index) <span class="op">+</span> <span class="dv">1</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>max_length <span class="op">=</span> <span class="bu">max</span>(<span class="bu">len</span>(caption.split()) <span class="cf">for</span> caption <span class="kw">in</span> captions)</span>
+<div class="sourceCode" id="cb1"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tokenize captions</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">tokenizer</span> <span class="kw">=</span> Tokenizer<span class="op">()</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">tokenizer.fit_on_texts</span><span class="er">(</span><span class="ex">captions</span><span class="kw">)</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">vocab_size</span> <span class="kw">=</span> len<span class="op">(tokenizer.word</span>_index<span class="op">)</span> + 1</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">max_length</span> <span class="kw">=</span> max<span class="pp">(</span><span class="ss">len</span><span class="pp">(</span><span class="ss">caption.split</span><span class="pp">())</span><span class="ss"> for caption in captions</span><span class="pp">)</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Train-test split</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>images <span class="op">=</span> data[<span class="st">'image'</span>].unique().tolist()</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>nimages <span class="op">=</span> <span class="bu">len</span>(images)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ex">images</span> <span class="kw">=</span> data<span class="pp">[</span><span class="st">'image'</span><span class="pp">]</span>.unique<span class="pp">()</span>.tolist<span class="op">()</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ex">nimages</span> <span class="kw">=</span> len<span class="op">(images)</span></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>split_index <span class="op">=</span> <span class="bu">round</span>(<span class="fl">0.85</span> <span class="op">*</span> nimages)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>train_images <span class="op">=</span> images[:split_index]</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>val_images <span class="op">=</span> images[split_index:]</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="ex">split_index</span> <span class="kw">=</span> round<span class="pp">(</span><span class="ss">0.85 </span><span class="pp">*</span><span class="ss"> nimages</span><span class="pp">)</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ex">train_images</span> <span class="kw">=</span> images<span class="pp">[</span><span class="st">:split_index</span><span class="pp">]</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="ex">val_images</span> <span class="kw">=</span> images<span class="pp">[</span><span class="st">split_index:</span><span class="pp">]</span></span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>train <span class="op">=</span> data[data[<span class="st">'image'</span>].isin(train_images)]</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>test <span class="op">=</span> data[data[<span class="st">'image'</span>].isin(val_images)]</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="ex">train</span> <span class="kw">=</span> data<span class="pp">[</span><span class="st">data['image'</span><span class="pp">]</span>.isin<span class="pp">(</span><span class="ss">train_images</span><span class="pp">)</span>]</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="bu">test</span> <span class="kw">=</span> data<span class="pp">[</span><span class="st">data['image'</span><span class="pp">]</span>.isin<span class="pp">(</span><span class="ss">val_images</span><span class="pp">)</span>]</span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>train.reset_index(inplace<span class="op">=</span><span class="va">True</span>, drop<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>test.reset_index(inplace<span class="op">=</span><span class="va">True</span>, drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="ex">train.reset_index</span><span class="er">(</span><span class="va">inplace</span><span class="op">=</span>True, <span class="va">drop</span><span class="op">=</span>True<span class="kw">)</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="ex">test.reset_index</span><span class="er">(</span><span class="va">inplace</span><span class="op">=</span>True, <span class="va">drop</span><span class="op">=</span>True<span class="kw">)</span></span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>tokenizer.texts_to_sequences([captions[<span class="dv">1</span>]])[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="ex">tokenizer.texts_to_sequences</span><span class="er">(</span><span class="ex">[captions[1]]</span><span class="kw">)</span><span class="ex">[0]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="image-feature-extraction" class="level1">
 <h1>Image Feature Extraction</h1>
 <p>This section uses the DenseNet201 model to extract meaningful image features, which are saved in a dictionary for use during model training. Each image is resized, normalized, and converted into a format compatible with the model.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use DenseNet201 for image feature extraction</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> DenseNet201()</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>fe <span class="op">=</span> Model(inputs<span class="op">=</span>model.<span class="bu">input</span>, outputs<span class="op">=</span>model.layers[<span class="op">-</span><span class="dv">2</span>].output)</span>
+<div class="sourceCode" id="cb2"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use DenseNet201 for image feature extraction</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">model</span> <span class="kw">=</span> DenseNet201<span class="op">()</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">fe</span> <span class="kw">=</span> Model<span class="pp">(</span><span class="ss">inputs=model.input, outputs=model.layers</span><span class="pp">[</span><span class="op">-</span><span class="st">2</span><span class="pp">]</span><span class="ss">.output</span><span class="pp">)</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>img_size <span class="op">=</span> <span class="dv">224</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>features <span class="op">=</span> {}</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> image <span class="kw">in</span> tqdm(data[<span class="st">'image'</span>].unique().tolist()):</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    img <span class="op">=</span> load_img(os.path.join(image_path, image), target_size<span class="op">=</span>(img_size, img_size))</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    img <span class="op">=</span> img_to_array(img)</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    img <span class="op">=</span> img <span class="op">/</span> <span class="fl">255.</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    img <span class="op">=</span> np.expand_dims(img, axis<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    feature <span class="op">=</span> fe.predict(img, verbose<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    features[image] <span class="op">=</span> feature</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ex">img_size</span> <span class="kw">=</span> 224</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="ex">features</span> <span class="kw">=</span> {}</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> image <span class="kw">in</span> tqdm<span class="pp">(</span><span class="ss">data</span><span class="pp">[</span><span class="st">'image'</span><span class="pp">]</span><span class="ss">.unique</span><span class="pp">()</span><span class="ss">.tolist</span><span class="pp">())</span>:</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="ex">img</span> <span class="kw">=</span> load_img<span class="pp">(</span><span class="ss">os.path.join</span><span class="pp">(</span><span class="ss">image_path, image</span><span class="pp">)</span><span class="ss">, target_size=</span><span class="pp">(</span><span class="ss">img_size, img_size</span><span class="pp">))</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="ex">img</span> <span class="kw">=</span> img_to_array<span class="op">(img)</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="ex">img</span> <span class="kw">=</span> img / 255.</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="ex">img</span> <span class="kw">=</span> np.expand_dims<span class="op">(img, axis=0)</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="ex">feature</span> <span class="kw">=</span> fe.predict<span class="op">(img, verbose=0)</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="va">features</span><span class="op">[</span>image<span class="op">]</span> <span class="ex">=</span> feature</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="custom-data-generator" class="level1">
 <h1>Custom Data Generator</h1>
 <p>This custom data generator class facilitates efficient model training by yielding batches of data, including image features and tokenized caption sequences. It handles batch creation, shuffling, and ensures compatibility with the model’s input format.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> CustomDataGenerator(Sequence):</span>
+<div class="sourceCode" id="cb3"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">class</span> CustomDataGenerator<span class="pp">(</span><span class="ss">Sequence</span><span class="pp">)</span>:</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, df, X_col, y_col, batch_size, directory, tokenizer,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                 vocab_size, max_length, features, shuffle<span class="op">=</span><span class="va">True</span>):</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="ex">def</span> __init__<span class="pp">(</span><span class="ss">self, df, X_col, y_col, batch_size, directory, tokenizer,</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="ss">                 vocab_size, max_length, features, shuffle=True</span><span class="pp">)</span>:</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.df <span class="op">=</span> df.copy()</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.X_col <span class="op">=</span> X_col</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.y_col <span class="op">=</span> y_col</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.directory <span class="op">=</span> directory</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.batch_size <span class="op">=</span> batch_size</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.tokenizer <span class="op">=</span> tokenizer</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.vocab_size <span class="op">=</span> vocab_size</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.max_length <span class="op">=</span> max_length</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.features <span class="op">=</span> features</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.shuffle <span class="op">=</span> shuffle</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.n <span class="op">=</span> <span class="bu">len</span>(<span class="va">self</span>.df)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        <span class="ex">self.df</span> <span class="kw">=</span> df.copy<span class="op">()</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        <span class="ex">self.X_col</span> <span class="kw">=</span> X_col</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="ex">self.y_col</span> <span class="kw">=</span> y_col</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="ex">self.directory</span> <span class="kw">=</span> directory</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        <span class="ex">self.batch_size</span> <span class="kw">=</span> batch_size</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        <span class="ex">self.tokenizer</span> <span class="kw">=</span> tokenizer</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        <span class="ex">self.vocab_size</span> <span class="kw">=</span> vocab_size</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        <span class="ex">self.max_length</span> <span class="kw">=</span> max_length</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        <span class="ex">self.features</span> <span class="kw">=</span> features</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        <span class="ex">self.shuffle</span> <span class="kw">=</span> shuffle</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        <span class="ex">self.n</span> <span class="kw">=</span> len<span class="op">(sel</span>f.df)</span>
 <span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> on_epoch_end(<span class="va">self</span>):</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.shuffle:</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.df <span class="op">=</span> <span class="va">self</span>.df.sample(frac<span class="op">=</span><span class="dv">1</span>).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    def on_epoch_end(self):</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>        if self.shuffle:</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>            self.df = self.df.sample(frac=1).reset_index(drop=True)</span>
 <span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__len__</span>(<span class="va">self</span>):</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.n <span class="op">//</span> <span class="va">self</span>.batch_size</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    def __<span class="op">len</span>__(self):</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>        return self.<span class="op">n // sel</span>f.batch_size</span>
 <span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__getitem__</span>(<span class="va">self</span>, index):</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    def __getitem__(self, index):</span>
 <span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>        batch <span class="op">=</span> <span class="va">self</span>.df.iloc[index <span class="op">*</span> <span class="va">self</span>.batch_size:(index <span class="op">+</span> <span class="dv">1</span>) <span class="op">*</span> <span class="va">self</span>.batch_size, :]</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>        X1, X2, y <span class="op">=</span> <span class="va">self</span>.__get_data(batch)</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (X1, X2), y</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>        batch = self.df.iloc[index * self.batch_size:(index + 1) * self.batch_size, :]</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>        X1, X2, y = self.__get_data(batch)</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>        return (X1, X2), y</span>
 <span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> __get_data(<span class="va">self</span>, batch):</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>    def __get_data(self, batch):</span>
 <span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>        X1, X2, y <span class="op">=</span> <span class="bu">list</span>(), <span class="bu">list</span>(), <span class="bu">list</span>()</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>        X1, X2, y = <span class="op">list()</span>, list<span class="pp">()</span>, list<span class="op">()</span></span>
 <span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>        images <span class="op">=</span> batch[<span class="va">self</span>.X_col].tolist()</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>        <span class="ex">images</span> <span class="kw">=</span> batch<span class="pp">[</span><span class="st">self.X_col</span><span class="pp">]</span>.tolist<span class="op">()</span></span>
 <span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> image <span class="kw">in</span> images:</span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>            feature <span class="op">=</span> <span class="va">self</span>.features[image][<span class="dv">0</span>]</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>            <span class="ex">feature</span> <span class="kw">=</span> self.features<span class="pp">[</span><span class="st">image</span><span class="pp">][</span><span class="st">0</span><span class="pp">]</span></span>
 <span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>            captions <span class="op">=</span> batch.loc[batch[<span class="va">self</span>.X_col] <span class="op">==</span> image, <span class="va">self</span>.y_col].tolist()</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>            <span class="ex">captions</span> <span class="kw">=</span> batch.loc<span class="pp">[</span><span class="st">batch[self.X_col</span><span class="pp">]</span> <span class="kw">=</span>= image, self.y_col].tolist<span class="op">()</span></span>
 <span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> caption <span class="kw">in</span> captions:</span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>                seq <span class="op">=</span> <span class="va">self</span>.tokenizer.texts_to_sequences([caption])[<span class="dv">0</span>]</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>                <span class="fu">seq</span> <span class="kw">=</span> self.tokenizer.texts_to_sequences<span class="pp">([</span><span class="st">caption</span><span class="pp">])[</span><span class="st">0</span><span class="pp">]</span></span>
 <span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>                <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="bu">len</span>(seq)):</span>
-<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>                    in_seq, out_seq <span class="op">=</span> seq[:i], seq[i]</span>
-<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>                    in_seq <span class="op">=</span> pad_sequences([in_seq], maxlen<span class="op">=</span><span class="va">self</span>.max_length)[<span class="dv">0</span>]</span>
-<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>                    out_seq <span class="op">=</span> to_categorical([out_seq], num_classes<span class="op">=</span><span class="va">self</span>.vocab_size)[<span class="dv">0</span>]</span>
-<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>                    X1.append(feature)</span>
-<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>                    X2.append(in_seq)</span>
-<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>                    y.append(out_seq)</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>                <span class="cf">for</span> i <span class="kw">in</span> range<span class="pp">(</span><span class="ss">1, len</span><span class="pp">(</span><span class="ss">seq</span><span class="pp">))</span>:</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>                    <span class="ex">in_seq,</span> out_seq <span class="kw">=</span> seq<span class="pp">[</span><span class="st">:i</span><span class="pp">]</span>, seq<span class="pp">[</span><span class="st">i</span><span class="pp">]</span></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>                    <span class="ex">in_seq</span> <span class="kw">=</span> pad_sequences<span class="pp">([</span><span class="st">in_seq</span><span class="pp">]</span><span class="ss">, maxlen=self.max_length</span><span class="pp">)[</span><span class="st">0</span><span class="pp">]</span></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>                    <span class="ex">out_seq</span> <span class="kw">=</span> to_categorical<span class="pp">([</span><span class="st">out_seq</span><span class="pp">]</span><span class="ss">, num_classes=self.vocab_size</span><span class="pp">)[</span><span class="st">0</span><span class="pp">]</span></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>                    <span class="ex">X1.append</span><span class="er">(</span><span class="ex">feature</span><span class="kw">)</span></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>                    <span class="ex">X2.append</span><span class="er">(</span><span class="ex">in_seq</span><span class="kw">)</span></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>                    <span class="ex">y.append</span><span class="er">(</span><span class="ex">out_seq</span><span class="kw">)</span></span>
 <span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>        X1, X2, y <span class="op">=</span> np.array(X1), np.array(X2), np.array(y)</span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>        <span class="ex">X1,</span> X2, y <span class="kw">=</span> np.array<span class="pp">(</span><span class="ss">X1</span><span class="pp">)</span>, np.array<span class="pp">(</span><span class="ss">X2</span><span class="pp">)</span>, np.array<span class="op">(y)</span></span>
 <span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> X1, X2, y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="ex">X1,</span> X2, y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Next week we will look at the model creation and the image and text feature layers!</p>
 
 

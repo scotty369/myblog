@@ -17,7 +17,7 @@ Min caption length: 1 words
 
 This section handles the preparation of textual data by converting image captions into sequences of integers. It also splits the dataset into training and validation sets, ensuring that 85% of the images are used for training.
 
-```python
+```zsh
 # Tokenize captions
 tokenizer = Tokenizer()
 tokenizer.fit_on_texts(captions)
@@ -45,7 +45,7 @@ tokenizer.texts_to_sequences([captions[1]])[0]
 
 This section uses the DenseNet201 model to extract meaningful image features, which are saved in a dictionary for use during model training. Each image is resized, normalized, and converted into a format compatible with the model.
 
-```python
+```zsh
 # Use DenseNet201 for image feature extraction
 model = DenseNet201()
 fe = Model(inputs=model.input, outputs=model.layers[-2].output)
@@ -65,7 +65,7 @@ for image in tqdm(data['image'].unique().tolist()):
 
 This custom data generator class facilitates efficient model training by yielding batches of data, including image features and tokenized caption sequences. It handles batch creation, shuffling, and ensures compatibility with the model's input format.
 
-```python
+```zsh
 class CustomDataGenerator(Sequence):
 
     def __init__(self, df, X_col, y_col, batch_size, directory, tokenizer,

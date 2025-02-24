@@ -41,7 +41,7 @@ You can create ridgeline plots in Python using libraries like `joypy` or by manu
 
 **Example using `plotly & seaborn`:**
 
-```python
+```zsh
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -98,3 +98,4 @@ fig.update_layout(
 )
 
 fig.show()
+```

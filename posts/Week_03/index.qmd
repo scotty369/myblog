@@ -16,7 +16,7 @@ Below is a visualization of the most popular words from the caption dataset. Not
 
 Below is the code for defining and compiling a neural network model designed for image captioning. The model combines image and text features, processes them through LSTM layers, and generates captions.
 
-```python
+```zsh
 from keras.models import Model
 from keras.layers import Input, Dense, Reshape, Embedding, LSTM, Dropout, add, concatenate
 from keras.utils import plot_model
@@ -46,7 +46,7 @@ caption_model.compile(loss='categorical_crossentropy', optimizer='adam')
 
 # Model Visualization
 
-```python
+```zsh
 # Plot model architecture
 plot_model(caption_model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
 
@@ -58,7 +58,7 @@ caption_model.summary()
 
 The following code sets up custom data generators for training and validation. These generators load image-caption pairs from the dataset and prepare batches for model training.
 
-```python
+```zsh
 train_generator = CustomDataGenerator(
     df=train,
     X_col='image',

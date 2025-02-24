@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Scott Townsend">
-<meta name="dcterms.date" content="2025-02-11">
+<meta name="dcterms.date" content="2025-02-23">
 
-<title>scotty369 - Week 3</title>
+<title>scotty369 - Resume</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -161,10 +161,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Week 3</h1>
+      <h1 class="title">Resume</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">news</div>
-                <div class="quarto-category">code</div>
+                <div class="quarto-category">Quarto</div>
+                <div class="quarto-category">LaTeX</div>
               </div>
                   </div>
   </div>
@@ -182,7 +182,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">February 11, 2025</p>
+        <p class="date">February 23, 2025</p>
       </div>
     </div>
     
@@ -201,80 +201,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="word-cloud" class="level1">
-<h1>Word Cloud</h1>
-<p>Below is a visualization of the most popular words from the caption dataset. Notably, “Man” and “Woman” emerge as the most frequently mentioned words within the captions.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="pic2.png" class="img-fluid figure-img"></p>
-<figcaption>Word Cloud</figcaption>
-</figure>
-</div>
+<p><img src="resume.png" class="img-fluid"><br>
+<br></p>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>I remember making my first resume when I was in High School about 8 years as a Word Document. I hated how difficult it was to format it to my liking. I struggled with finding good templates and constantly shifted the wording, placement, and overall style of my Resume. Recently, in my Senior Data Science Project course my professor admonished prospective Data Scientists for still using Word, when tools such as Quarto existed. This got me interested in creating a Resume that exported a Mark down document into a pdf. I was directed to several resources, where I ultimately landed on the repository below that you can customized to your liking by: Alex Bass or <em>acbass49</em> on GitHub</p>
 </section>
-<section id="caption-model-architecture" class="level1">
-<h1>Caption Model Architecture</h1>
-<p>Below is the code for defining and compiling a neural network model designed for image captioning. The model combines image and text features, processes them through LSTM layers, and generates captions.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">from</span> keras.models import Model</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">from</span> keras.layers import Input, Dense, Reshape, Embedding, LSTM, Dropout, add, concatenate</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">from</span> keras.utils import plot_model</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Define input layers</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">input1</span> <span class="kw">=</span> Input<span class="pp">(</span><span class="ss">shape=</span><span class="pp">(</span><span class="ss">1920,</span><span class="pp">))</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ex">input2</span> <span class="kw">=</span> Input<span class="pp">(</span><span class="ss">shape=</span><span class="pp">(</span><span class="ss">max_length,</span><span class="pp">))</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Image feature layers</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="ex">img_features</span> <span class="kw">=</span> Dense<span class="pp">(</span><span class="ss">256, activation=</span><span class="st">'relu'</span><span class="pp">)</span><span class="op">(input1)</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="ex">img_features_reshaped</span> <span class="kw">=</span> Reshape<span class="pp">((</span><span class="ss">1, 256</span><span class="pp">)</span><span class="ss">, input_shape=</span><span class="pp">(</span><span class="ss">256,</span><span class="pp">))</span><span class="op">(img_fe</span>atures)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a># Text feature layers</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>sentence_features = Embedding(vocab_size<span class="op">,</span> 256<span class="op">,</span> mask_zero=False)(input2)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>merged = concatenate([img_features_reshaped<span class="op">,</span> sentence_features]<span class="op">,</span> axis=1)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>sentence_features = LSTM(256)(merged)</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>x = Dropout(0.5)(sentence_features)</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>x = add([x<span class="op">,</span> img_features])</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>x = Dense(128<span class="op">,</span> activation='relu')(x)</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>x = Dropout(0.5)(x)</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>output = Dense(vocab_size<span class="op">,</span> activation='softmax')(x)</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a># Compile the model</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>caption_model = Model(inputs=[input1<span class="op">,</span> input2]<span class="op">,</span> outputs=output)</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>caption_model.compile(loss='categorical_crossentropy'<span class="op">,</span> optimizer='adam')</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="model-visualization" class="level1">
-<h1>Model Visualization</h1>
-<div class="sourceCode" id="cb2"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot model architecture</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">plot_model</span><span class="er">(</span><span class="ex">caption_model,</span> to_file=<span class="st">'model_plot.png'</span>, show_shapes=True, show_layer_names=True<span class="kw">)</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Model summary</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">caption_model.summary()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="data-generators" class="level1">
-<h1>Data Generators</h1>
-<p>The following code sets up custom data generators for training and validation. These generators load image-caption pairs from the dataset and prepare batches for model training.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">train_generator</span> <span class="kw">=</span> CustomDataGenerator<span class="pp">(</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ss">    df=train,</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ss">    X_col=</span><span class="st">'image'</span><span class="ss">,</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="ss">    y_col=</span><span class="st">'caption'</span><span class="ss">,</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ss">    batch_size=64,</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="ss">    directory=image_path,</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="ss">    tokenizer=tokenizer,</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="ss">    vocab_size=vocab_size,</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="ss">    max_length=max_length,</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="ss">    features=features</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="pp">)</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="ex">validation_generator</span> <span class="kw">=</span> CustomDataGenerator<span class="pp">(</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="ss">    df=test,</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="ss">    X_col=</span><span class="st">'image'</span><span class="ss">,</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="ss">    y_col=</span><span class="st">'caption'</span><span class="ss">,</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="ss">    batch_size=64,</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="ss">    directory=image_path,</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="ss">    tokenizer=tokenizer,</span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="ss">    vocab_size=vocab_size,</span></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="ss">    max_length=max_length,</span></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="ss">    features=features</span></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="pp">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Stay tuned for next week where we will finish the model!</p>
+<section id="implementation" class="level2">
+<h2 class="anchored" data-anchor-id="implementation">Implementation</h2>
+<p>The development of this resume is somewhat complex as it implements LaTeX in Quarto to beautifully format the perfect Resume. I have been using this in VS Code, where you can easily <em>render</em> the work once you format or adjust the LaTeX and markdown syntax to your liking.</p>
+<p>As I have been editing my resume in VS Code using this tool, I have personally found the ability to edit the document while simultaneously viewing the changes side by side to be extremely helpful. Below is a snippet of what it looks like for me as I am editing.</p>
+<p><img src="resume1.png" class="img-fluid"></p>
+<p>Please note, for now this is only able to render the LaTeX resume document into a pdf. I plan to mess around and adjust some things in the near future so you can export it as an html if thats the sort of thing that you need as well.</p>
+<p>Additionally, some cool features of the exported pdf include clickable links (all text in blue are actual links) that the reader can visit, so populate those spaces with urls to your work to make yourself more discoverable.</p>
+<p>The finished version can be seen below:</p>
+<p><img src="resume2.png" class="img-fluid"></p>
+<p>You can fork or clone the repository using the below link if you want to implement this somehow! All credit goes to Alex Bass or <em>acbass49</em> on GitHub. I have only made minor adjustments and changes to suit my needs. I only want to make this more discoverable by others struggling to find templates or formats that they enjoy or are satisfied with.</p>
+<p>Copy and paste this link into an IDE terminal of your choice (VS Code preferred) and update the files so it is personalized to you.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Clone this repository and adjust it to your liking! </span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/acbass49/CV_Quarto.git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>

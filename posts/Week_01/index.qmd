@@ -28,7 +28,7 @@ The following deliverables are part of this project:
 
 First, I load the dataset and ensure that the images and captions are properly matched:
 
-```python
+```zsh
 import pandas as pd
 import os
 
@@ -47,7 +47,7 @@ data.head()
 
 Next, I remove any duplicates and handle missing captions:
 
-```python
+```zsh
 # Remove duplicates
 if data.duplicated().any():
     print(f"Found {data.duplicated().sum()} duplicate rows. Removing duplicates...")
@@ -75,7 +75,7 @@ This confirmed that there were duplicates within the Flickr dataset.
 
 To visualize a sample of images with their captions, I used:
 
-```python
+```zsh
 display_images(data.sample(15))
 ```
 
@@ -87,7 +87,7 @@ This line of code shows a random sample of 15 images with their respective capti
 
 Finally, I implemented text preprocessing to clean and format the captions:
 
-```python
+```zsh
 def text_preprocessing(data):
     data['caption'] = data['caption'].apply(lambda x: x.lower())
     data['caption'] = data['caption'].apply(lambda x: x.replace("[^A-Za-z]", ""))

@@ -1,0 +1,39 @@
+---
+title: "Resume"
+author: "Scott Townsend"
+date: "2025-02-23"
+categories: [Quarto, LaTeX]
+image: "resume.png"
+---
+
+![](resume.png)  
+<br>
+
+## Introduction 
+
+I remember making my first resume when I was in High School about 8 years as a Word Document. I hated how difficult it was to format it to my liking. I struggled with finding good templates and constantly shifted the wording, placement, and overall style of my Resume. Recently, in my Senior Data Science Project course my professor admonished prospective Data Scientists for still using Word, when tools such as Quarto existed. This got me interested in creating a Resume that exported a Mark down document into a pdf. I was directed to several resources, where I ultimately landed on the repository below that you can customized to your liking by: Alex Bass or *acbass49* on GitHub
+
+## Implementation
+
+The development of this resume is somewhat complex as it implements LaTeX in Quarto to beautifully format the perfect Resume. I have been using this in VS Code, where you can easily *render* the work once you format or adjust the LaTeX and markdown syntax to your liking. 
+
+As I have been editing my resume in VS Code using this tool, I have personally found the ability to edit the document while simultaneously viewing the changes side by side to be extremely helpful. Below is a snippet of what it looks like for me as I am editing. 
+
+![](resume1.png)
+
+Please note, for now this is only able to render the LaTeX resume document into a pdf. I plan to mess around and adjust some things in the near future so you can export it as an html if thats the sort of thing that you need as well. 
+
+Additionally, some cool features of the exported pdf include clickable links (all text in blue are actual links) that the reader can visit, so populate those spaces with urls to your work to make yourself more discoverable. 
+
+The finished version can be seen below: 
+
+![](resume2.png)
+
+You can fork or clone the repository using the below link if you want to implement this somehow! All credit goes to Alex Bass or *acbass49* on GitHub. I have only made minor adjustments and changes to suit my needs. I only want to make this more discoverable by others struggling to find templates or formats that they enjoy or are satisfied with. 
+
+Copy and paste this link into an IDE terminal of your choice (VS Code preferred) and update the files so it is personalized to you. 
+
+```zsh
+# Clone this repository and adjust it to your liking! 
+git clone https://github.com/acbass49/CV_Quarto.git
+```
