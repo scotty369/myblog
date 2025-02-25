@@ -9,7 +9,7 @@
 <meta name="author" content="Scott Townsend">
 <meta name="dcterms.date" content="2025-02-23">
 
-<title>scotty369 - Ridgelines in Python</title>
+<title>scotty369 - Ridgelines in R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -161,9 +161,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Ridgelines in Python</h1>
+      <h1 class="title">Ridgelines in R</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">Python</div>
+                <div class="quarto-category">R</div>
                 <div class="quarto-category">Dataviz</div>
               </div>
                   </div>
@@ -203,82 +203,66 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="introducing-ridgeline-plots-a-visual-feast-for-data-exploration" class="level1">
 <h1>Introducing Ridgeline Plots: A Visual Feast for Data Exploration</h1>
-<p><img src="ridges.png" class="img-fluid" width="500"></p>
-<p>In the world of data visualization, understanding the distribution of data across different categories is crucial. Ridgeline plots, also known as joyplots, offer an elegant and effective way to visualize these distributions. This blog post will guide you through creating ridgeline plots in Python using <code>seaborn</code> and <code>matplotlib</code>.</p>
+<p><img src="ridges2.png" class="img-fluid" width="500"></p>
+<p>In the realm of data visualization, the quest for insightful and aesthetically pleasing representations is ongoing. Enter <strong>ridgeline plots</strong>, a powerful tool for displaying distributions across multiple categories. This blog post will explore what ridgeline plots are, how to create them in R using the <code>ggplot2</code> and <code>ggridges</code> packages, and why they can be a valuable addition to your data analysis toolkit.</p>
 <section id="what-are-ridgeline-plots" class="level2">
 <h2 class="anchored" data-anchor-id="what-are-ridgeline-plots">What are Ridgeline Plots?</h2>
-<p>Ridgeline plots display the distribution of a numerical variable across multiple categories by plotting density estimates (or histograms) that are stacked vertically and slightly overlapped. This creates a “ridgeline” effect, making it easy to compare the distributions of different groups.</p>
-<p>These plots are particularly useful for:</p>
+<p>Ridgeline plots, also known as joyplots, are a type of visualization that displays the distribution of a numerical variable for several groups. They achieve this by plotting density estimates (or histograms) for each group, stacked vertically and slightly overlapping. This overlapping effect creates a “ridgeline” appearance, hence the name.</p>
+<p>These plots are particularly effective for:</p>
 <ul>
-<li><strong>Comparing distributions:</strong> Quickly identifying differences in shape, spread, and central tendency across categories.</li>
-<li><strong>Identifying patterns:</strong> Spotting trends and shifts in data that might be obscured in other visualization types.</li>
-<li><strong>Enhancing visual appeal:</strong> Creating engaging and informative graphics.</li>
+<li><strong>Comparing distributions:</strong> Quickly observe how distributions vary across different categories.</li>
+<li><strong>Identifying patterns:</strong> Spot trends and shifts in data that might be obscured in other visualization types.</li>
+<li><strong>Enhancing visual appeal:</strong> Create visually engaging and informative graphics.</li>
 </ul>
 </section>
-<section id="creating-ridgeline-plots-in-python" class="level2">
-<h2 class="anchored" data-anchor-id="creating-ridgeline-plots-in-python">Creating Ridgeline Plots in Python</h2>
-<p>Let’s illustrate how to create ridgeline plots using a simulated dataset of monthly temperature distributions. We’ll utilize the <code>seaborn</code> and <code>matplotlib</code> libraries, which are essential for this task.</p>
-<p>First, ensure you have the necessary libraries installed:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">import</span> matplotlib.pyplot as plt</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">import</span> seaborn as sns</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">import</span> pandas as pd</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">import</span> numpy as np</span>
+<section id="creating-ridgeline-plots-in-r" class="level2">
+<h2 class="anchored" data-anchor-id="creating-ridgeline-plots-in-r">Creating Ridgeline Plots in R</h2>
+<p>To illustrate how to create ridgeline plots, let’s use a simulated dataset of monthly temperature distributions. We’ll utilize the <code>ggplot2</code> and <code>ggridges</code> packages, which are essential for this task.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">library</span><span class="er">(</span><span class="ex">ggplot2</span><span class="kw">)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">library</span><span class="er">(</span><span class="ex">ggridges</span><span class="kw">)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">set.seed</span><span class="er">(</span><span class="ex">123</span><span class="kw">)</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">np.random.seed</span><span class="er">(</span><span class="ex">123</span><span class="kw">)</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ex">months</span> <span class="kw">=</span> <span class="pp">[</span><span class="st">'January', 'February', 'March', 'April', 'May', 'June', </span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>          <span class="st">'July'</span><span class="ex">,</span> <span class="st">'August'</span>, <span class="st">'September'</span>, <span class="st">'October'</span>, <span class="st">'November'</span>, <span class="st">'December'</span>]</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="ex">n</span> <span class="kw">=</span> 100</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ex">data</span> <span class="kw">=</span> pd.DataFrame<span class="pp">(</span><span class="ss">{</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="ss">    </span><span class="st">'month'</span><span class="ss">: np.repeat</span><span class="pp">(</span><span class="ss">months, n</span><span class="pp">)</span><span class="ss">,</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="ss">    </span><span class="st">'temperature'</span><span class="ss">: np.concatenate</span><span class="pp">([</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="ss">        np.random.normal</span><span class="pp">(</span><span class="ss">20, 5, n</span><span class="pp">)</span><span class="ss">,    </span><span class="pp">#</span><span class="ss"> January</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="ss">        np.random.normal</span><span class="pp">(</span><span class="ss">25, 6, n</span><span class="pp">)</span><span class="ss">,    </span><span class="pp">#</span><span class="ss"> February</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="ss">        np.random.normal</span><span class="pp">(</span><span class="ss">30, 7, n</span><span class="pp">)</span><span class="ss">,    </span><span class="pp">#</span><span class="ss"> March</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="ss">        np.random.normal</span><span class="pp">(</span><span class="ss">40, 8, n</span><span class="pp">)</span><span class="ss">,    </span><span class="pp">#</span><span class="ss"> April</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="ss">        np.random.normal</span><span class="pp">(</span><span class="ss">50, 9, n</span><span class="pp">)</span><span class="ss">,    </span><span class="pp">#</span><span class="ss"> May</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="ss">        np.random.normal</span><span class="pp">(</span><span class="ss">60, 10, n</span><span class="pp">)</span><span class="ss">,   </span><span class="pp">#</span><span class="ss"> June</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="ss">        np.random.normal</span><span class="pp">(</span><span class="ss">65, 10, n</span><span class="pp">)</span><span class="ss">,   </span><span class="pp">#</span><span class="ss"> July</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="ss">        np.random.normal</span><span class="pp">(</span><span class="ss">62, 9, n</span><span class="pp">)</span><span class="ss">,    </span><span class="pp">#</span><span class="ss"> August</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="ss">        np.random.normal</span><span class="pp">(</span><span class="ss">55, 8, n</span><span class="pp">)</span><span class="ss">,    </span><span class="pp">#</span><span class="ss"> September</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="ss">        np.random.normal</span><span class="pp">(</span><span class="ss">45, 7, n</span><span class="pp">)</span><span class="ss">,    </span><span class="pp">#</span><span class="ss"> October</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="ss">        np.random.normal</span><span class="pp">(</span><span class="ss">35, 6, n</span><span class="pp">)</span><span class="ss">,    </span><span class="pp">#</span><span class="ss"> November</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="ss">        np.random.normal</span><span class="pp">(</span><span class="ss">28, 5, n</span><span class="pp">)</span><span class="ss">     </span><span class="pp">#</span><span class="ss"> December</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="ss">    ]</span><span class="pp">)</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="ss">}</span><span class="pp">)</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="va">data</span><span class="op">[</span><span class="st">'month'</span><span class="op">]</span> <span class="ex">=</span> pd.Categorical<span class="pp">(</span><span class="ss">data</span><span class="pp">[</span><span class="st">'month'</span><span class="pp">]</span><span class="ss">, categories=months, ordered=True</span><span class="pp">)</span></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="ex">plt.figure</span><span class="er">(</span><span class="va">figsize</span><span class="op">=</span><span class="va">(</span>10, 8<span class="va">)</span><span class="kw">)</span></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="ex">sns.set_theme</span><span class="er">(</span><span class="va">style</span><span class="op">=</span><span class="st">"white"</span>, <span class="va">rc</span><span class="op">=</span>{<span class="st">"axes.facecolor"</span>: <span class="kw">(</span><span class="ex">0,</span> 0, 0, 0<span class="kw">)</span><span class="er">}</span><span class="kw">)</span></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="ex">g</span> <span class="kw">=</span> sns.FacetGrid<span class="pp">(</span><span class="ss">data, row=</span><span class="st">"month"</span><span class="ss">, hue=</span><span class="st">"month"</span><span class="ss">, aspect=15, height=0.5, palette=</span><span class="st">"plasma"</span><span class="ss">, row_order=months</span><span class="pp">[</span><span class="st">::</span><span class="op">-</span><span class="st">1</span><span class="pp">])</span>  </span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="ex">g.map_dataframe</span><span class="er">(</span><span class="ex">sns.kdeplot,</span> <span class="st">"temperature"</span>, fill=True, alpha=1<span class="kw">)</span></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="ex">def</span> add_median<span class="pp">(</span><span class="ss">data, </span><span class="pp">**</span><span class="ss">kwargs</span><span class="pp">)</span>:</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    <span class="ex">median</span> <span class="kw">=</span> data<span class="pp">[</span><span class="st">'temperature'</span><span class="pp">]</span>.median<span class="op">()</span></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    <span class="ex">plt.axvline</span><span class="er">(</span><span class="ex">median,</span> color=<span class="st">'black'</span>, linestyle=<span class="st">'--'</span>, linewidth=1<span class="kw">)</span></span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="ex">g.map_dataframe</span><span class="er">(</span><span class="ex">add_median</span><span class="kw">)</span></span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="ex">def</span> label<span class="pp">(</span><span class="ss">data, color, label</span><span class="pp">)</span>: </span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>    <span class="ex">ax</span> <span class="kw">=</span> plt.gca<span class="op">()</span></span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>    <span class="ex">ax.text</span><span class="er">(</span><span class="ex">0,</span> 0.2, label, fontweight=<span class="st">"bold"</span>, color=color, ha=<span class="st">"left"</span>, va=<span class="st">"center"</span>, transform=ax.transAxes<span class="kw">)</span></span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="ex">g.map_dataframe</span><span class="er">(</span><span class="ex">label</span><span class="kw">)</span></span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="ex">g.set_titles</span><span class="er">(</span><span class="st">""</span><span class="kw">)</span></span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="ex">g.set</span><span class="er">(</span><span class="va">yticks</span><span class="op">=</span><span class="pp">[]</span><span class="kw">)</span></span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="ex">g.despine</span><span class="er">(</span><span class="va">left</span><span class="op">=</span>True<span class="kw">)</span></span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="ex">g.fig.subplots_adjust</span><span class="er">(</span><span class="va">hspace</span><span class="op">=</span>-0.25<span class="kw">)</span></span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a><span class="ex">g.set_axis_labels</span><span class="er">(</span><span class="st">"Average temperature (F)"</span><span class="ex">,</span> <span class="st">""</span><span class="kw">)</span></span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a><span class="ex">g.fig.suptitle</span><span class="er">(</span><span class="st">"Monthly Temperature Distribution"</span><span class="ex">,</span> fontsize=16<span class="kw">)</span></span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="fu">plt.show()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This python code should create the following chart:</p>
-<p><img src="ridgeline.png" class="img-fluid" width="500"></p>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">months</span> <span class="op">&lt;</span>- month.name </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ex">n</span> <span class="op">&lt;</span>- 100 </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ex">data</span> <span class="op">&lt;</span>- data.frame<span class="pp">(</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="ss">  month = rep</span><span class="pp">(</span><span class="ss">months, each = n</span><span class="pp">)</span><span class="ss">,</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="ss">  temperature = c</span><span class="pp">(</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ss">    rnorm</span><span class="pp">(</span><span class="ss">n, mean = 20, sd = 5</span><span class="pp">)</span><span class="ss">,    </span><span class="pp">#</span><span class="ss"> January</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="ss">    rnorm</span><span class="pp">(</span><span class="ss">n, mean = 25, sd = 6</span><span class="pp">)</span><span class="ss">,    </span><span class="pp">#</span><span class="ss"> February</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="ss">    rnorm</span><span class="pp">(</span><span class="ss">n, mean = 30, sd = 7</span><span class="pp">)</span><span class="ss">,    </span><span class="pp">#</span><span class="ss"> March</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="ss">    rnorm</span><span class="pp">(</span><span class="ss">n, mean = 40, sd = 8</span><span class="pp">)</span><span class="ss">,    </span><span class="pp">#</span><span class="ss"> April</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="ss">    rnorm</span><span class="pp">(</span><span class="ss">n, mean = 50, sd = 9</span><span class="pp">)</span><span class="ss">,    </span><span class="pp">#</span><span class="ss"> May</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="ss">    rnorm</span><span class="pp">(</span><span class="ss">n, mean = 60, sd = 10</span><span class="pp">)</span><span class="ss">,   </span><span class="pp">#</span><span class="ss"> June</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="ss">    rnorm</span><span class="pp">(</span><span class="ss">n, mean = 65, sd = 10</span><span class="pp">)</span><span class="ss">,   </span><span class="pp">#</span><span class="ss"> July</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="ss">    rnorm</span><span class="pp">(</span><span class="ss">n, mean = 62, sd = 9</span><span class="pp">)</span><span class="ss">,    </span><span class="pp">#</span><span class="ss"> August</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="ss">    rnorm</span><span class="pp">(</span><span class="ss">n, mean = 55, sd = 8</span><span class="pp">)</span><span class="ss">,    </span><span class="pp">#</span><span class="ss"> September</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="ss">    rnorm</span><span class="pp">(</span><span class="ss">n, mean = 45, sd = 7</span><span class="pp">)</span><span class="ss">,    </span><span class="pp">#</span><span class="ss"> October</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="ss">    rnorm</span><span class="pp">(</span><span class="ss">n, mean = 35, sd = 6</span><span class="pp">)</span><span class="ss">,    </span><span class="pp">#</span><span class="ss"> November</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="ss">    rnorm</span><span class="pp">(</span><span class="ss">n, mean = 28, sd = 5</span><span class="pp">)</span><span class="ss">     </span><span class="pp">#</span><span class="ss"> December</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="ss">  </span><span class="pp">)</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="pp">)</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="ex">data</span><span class="va">$month</span> <span class="op">&lt;</span>- factor<span class="pp">(</span><span class="ss">data</span><span class="va">$month</span><span class="ss">, levels = months</span><span class="pp">)</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="ex">ggplot</span><span class="er">(</span><span class="ex">data,</span> aes<span class="pp">(</span><span class="ss">x = temperature, y = month, fill = month</span><span class="pp">)</span><span class="kw">)</span> <span class="ex">+</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  <span class="ex">geom_density_ridges</span><span class="er">(</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="ex">scale</span> <span class="kw">=</span> 0.95, </span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="ex">rel_min_height</span> <span class="kw">=</span> 0.01, </span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    <span class="ex">quantile_lines</span> <span class="kw">=</span> TRUE, </span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="ex">quantile_fun</span> <span class="kw">=</span> function<span class="pp">(</span><span class="ss">x, ...</span><span class="pp">)</span> median<span class="op">(x)</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>  <span class="kw">)</span> <span class="ex">+</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>  <span class="ex">scale_fill_viridis_d</span><span class="er">(</span><span class="ex">option</span> <span class="kw">=</span> <span class="st">"plasma"</span>, direction <span class="kw">=</span> <span class="at">-1</span><span class="kw">)</span> <span class="ex">+</span> </span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>  <span class="ex">labs</span><span class="er">(</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    <span class="ex">x</span> <span class="kw">=</span> <span class="st">"Average temperature (F)"</span>,</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    <span class="ex">y</span> <span class="kw">=</span> NULL, </span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    <span class="ex">title</span> <span class="kw">=</span> <span class="st">"Monthly Temperature Distribution"</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>  <span class="kw">)</span> <span class="ex">+</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>  <span class="ex">theme_ridges</span><span class="er">(</span><span class="ex">grid</span> <span class="kw">=</span> FALSE<span class="kw">)</span> <span class="ex">+</span> </span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>  <span class="ex">theme</span><span class="er">(</span><span class="ex">legend.position</span> <span class="kw">=</span> <span class="st">"none"</span><span class="kw">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The above code in R will create the following image:</p>
+<p><img src="ridges.png" class="img-fluid" width="500"></p>
 
 
 </section>

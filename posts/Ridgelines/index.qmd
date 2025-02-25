@@ -1,101 +1,94 @@
 ---
-title: "Ridgelines"
+title: "Ridgelines in Python"
 author: "Scott Townsend"
 date: "2025-02-23"
 categories: [Python, Dataviz]
 image: "ridges.png"
 ---
 
-# Introducing Ridgeline Plots: A Visual Feast for Data
+# Introducing Ridgeline Plots: A Visual Feast for Data Exploration
 
-*What are Ridgeline Plots?*
+![](ridges.png){width="500"}
 
-Ridgeline plots, also known as joyplots, are a visually appealing way to display the distribution of a numerical variable across multiple categories. Imagine a series of overlapping density plots, stacked vertically, creating a "ridgeline" effect. They're excellent for comparing distributions and spotting trends across groups.
+In the world of data visualization, understanding the distribution of data across different categories is crucial. Ridgeline plots, also known as joyplots, offer an elegant and effective way to visualize these distributions. This blog post will guide you through creating ridgeline plots in Python using `seaborn` and `matplotlib`.
 
-![](ridgeline.png){width="500"}
+## What are Ridgeline Plots?
 
-*Why Use Ridgeline Plots?*
+Ridgeline plots display the distribution of a numerical variable across multiple categories by plotting density estimates (or histograms) that are stacked vertically and slightly overlapped. This creates a "ridgeline" effect, making it easy to compare the distributions of different groups.
 
-* **Clarity:** They provide a clear and concise way to visualize distributions, especially when comparing many categories.
-* **Trend Spotting:** They make it easy to identify patterns and trends across groups that might be obscured in other plot types.
-* **Visual Appeal:** Ridgeline plots are aesthetically pleasing, making them great for presentations and reports.
-* **Space Efficiency:** They can pack a lot of information into a relatively small space.
+These plots are particularly useful for:
 
-*How Do They Work?*
+* **Comparing distributions:** Quickly identifying differences in shape, spread, and central tendency across categories.
+* **Identifying patterns:** Spotting trends and shifts in data that might be obscured in other visualization types.
+* **Enhancing visual appeal:** Creating engaging and informative graphics.
 
-At their core, ridgeline plots are built from kernel density estimations (KDEs). KDEs are used to estimate the probability density function of a continuous variable.
+## Creating Ridgeline Plots in Python
 
-1.  **Calculate KDEs:** For each category, a KDE is calculated.
-2.  **Shift and Stack:** The KDEs are shifted vertically and stacked, creating the ridgeline effect.
-3.  **Optional Overlap:** The plots can overlap to create a smoother, continuous look.
+Let's illustrate how to create ridgeline plots using a simulated dataset of monthly temperature distributions. We'll utilize the `seaborn` and `matplotlib` libraries, which are essential for this task.
 
-*When to Use Ridgeline Plots*
-
-* **Comparing Distributions:** When you want to compare the distribution of a variable across multiple groups (e.g., comparing temperatures across months, income across regions).
-* **Time Series Analysis:** When you want to visualize how a distribution changes over time.
-* **Exploring Categorical Data:** When you want to see how a numerical variable is distributed within different categories.
-
-*How to Create Ridgeline Plots in Python*
-
-You can create ridgeline plots in Python using libraries like `joypy` or by manually calculating and plotting KDEs with `seaborn` and `plotly` or `matplotlib`.
-
-**Example using `plotly & seaborn`:**
+First, ensure you have the necessary libraries installed:
 
 ```zsh
-import numpy as np
-import pandas as pd
-import seaborn as sns
-import plotly.graph_objects as go
 import matplotlib.pyplot as plt
+import seaborn as sns
+import pandas as pd
+import numpy as np
 
-np.random.seed(42)
-months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-data = []
-for i, month in enumerate(months):
-    temperatures = np.random.normal(loc=30 + i * 3, scale=5, size=100)
-    for temp in temperatures:
-        data.append([month, temp])
-df = pd.DataFrame(data, columns=["Month", "Temperature"])
+np.random.seed(123)
 
-fig = go.Figure()
+months = ['January', 'February', 'March', 'April', 'May', 'June', 
+          'July', 'August', 'September', 'October', 'November', 'December']
+n = 100
 
-for i, month in enumerate(months):
-    subset = df[df["Month"] == month]["Temperature"]
+data = pd.DataFrame({
+    'month': np.repeat(months, n),
+    'temperature': np.concatenate([
+        np.random.normal(20, 5, n),    # January
+        np.random.normal(25, 6, n),    # February
+        np.random.normal(30, 7, n),    # March
+        np.random.normal(40, 8, n),    # April
+        np.random.normal(50, 9, n),    # May
+        np.random.normal(60, 10, n),   # June
+        np.random.normal(65, 10, n),   # July
+        np.random.normal(62, 9, n),    # August
+        np.random.normal(55, 8, n),    # September
+        np.random.normal(45, 7, n),    # October
+        np.random.normal(35, 6, n),    # November
+        np.random.normal(28, 5, n)     # December
+    ])
+})
 
-    kde = sns.kdeplot(subset, bw_adjust=0.5)
-    x, y = kde.get_lines()[0].get_data()
-    plt.close() 
+data['month'] = pd.Categorical(data['month'], categories=months, ordered=True)
 
-    y_shifted = y + i * 0.3 
+plt.figure(figsize=(10, 8))
+sns.set_theme(style="white", rc={"axes.facecolor": (0, 0, 0, 0)})
 
-    fig.add_trace(go.Scatter(
-        x=x, y=y_shifted, mode='lines', fill='tozerox',
-        name=month, line=dict(width=1, color='black'),
-        opacity=0.7, fillcolor=f'rgba({np.random.randint(0, 256)}, {np.random.randint(0, 256)}, {np.random.randint(0, 256)}, 0.4)'
-    ))
+g = sns.FacetGrid(data, row="month", hue="month", aspect=15, height=0.5, palette="plasma", row_order=months[::-1])  
 
-    fig.add_trace(go.Scatter(
-        x=subset, y=[i * 0.3] * len(subset), mode='markers',
-        marker=dict(size=5, opacity=0.5, color=f'rgba({np.random.randint(0, 256)}, {np.random.randint(0, 256)}, {np.random.randint(0, 256)}, 0.5)'),
-        name=month, showlegend=False
-    ))
+g.map_dataframe(sns.kdeplot, "temperature", fill=True, alpha=1)
 
-fig.update_layout(
-    title="",
-    xaxis_title="Average temperature (F)",
-    yaxis=dict(
-        tickmode='array',
-        tickvals=[i * 0.3 for i in range(len(months))],
-        ticktext=months,
-        zeroline=False,
-        showgrid=False,
-        showline=False,
-        ticks=''
-    ),
-    showlegend=False,
-    plot_bgcolor='white',
-    margin=dict(l=0, r=0, t=20, b=20)
-)
+def add_median(data, **kwargs):
+    median = data['temperature'].median()
+    plt.axvline(median, color='black', linestyle='--', linewidth=1)
 
-fig.show()
+g.map_dataframe(add_median)
+
+def label(data, color, label): 
+    ax = plt.gca()
+    ax.text(0, 0.2, label, fontweight="bold", color=color, ha="left", va="center", transform=ax.transAxes)
+
+g.map_dataframe(label)
+
+g.set_titles("")
+g.set(yticks=[])
+g.despine(left=True)
+g.fig.subplots_adjust(hspace=-0.25)
+g.set_axis_labels("Average temperature (F)", "")
+g.fig.suptitle("Monthly Temperature Distribution", fontsize=16)
+
+plt.show()
 ```
+
+This python code should create the following chart: 
+
+![](ridgeline.png){width="500"}
