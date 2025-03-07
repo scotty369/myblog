@@ -144,7 +144,7 @@
     "href": "blog.html",
     "title": "Senior Project Blog",
     "section": "",
-    "text": "Ridgelines in R\n\n\n\n\n\n\nR\n\n\nDataviz\n\n\n\n\n\n\n\n\n\nFeb 23, 2025\n\n\nScott Townsend\n\n\n\n\n\n\n\n\n\n\n\n\nRidgelines in Python\n\n\n\n\n\n\nPython\n\n\nDataviz\n\n\n\n\n\n\n\n\n\nFeb 23, 2025\n\n\nScott Townsend\n\n\n\n\n\n\n\n\n\n\n\n\nResume\n\n\n\n\n\n\nQuarto\n\n\nLaTeX\n\n\n\n\n\n\n\n\n\nFeb 23, 2025\n\n\nScott Townsend\n\n\n\n\n\n\n\n\n\n\n\n\nWeek 3\n\n\n\n\n\n\nnews\n\n\ncode\n\n\n\n\n\n\n\n\n\nFeb 11, 2025\n\n\nScott Townsend\n\n\n\n\n\n\n\n\n\n\n\n\nWeek 2\n\n\n\n\n\n\nnews\n\n\ncode\n\n\n\n\n\n\n\n\n\nFeb 4, 2025\n\n\nScott Townsend\n\n\n\n\n\n\n\n\n\n\n\n\nWeek 1\n\n\n\n\n\n\nnews\n\n\nanalysis\n\n\n\n\n\n\n\n\n\nJan 27, 2025\n\n\nScott Townsend\n\n\n\n\n\n\nNo matching items"
+    "text": "Ridgelines in R\n\n\n\n\n\n\nR\n\n\nDataviz\n\n\n\n\n\n\n\n\n\nFeb 23, 2025\n\n\nScott Townsend\n\n\n\n\n\n\n\n\n\n\n\n\nRidgelines in Python\n\n\n\n\n\n\nPython\n\n\nDataviz\n\n\n\n\n\n\n\n\n\nFeb 23, 2025\n\n\nScott Townsend\n\n\n\n\n\n\n\n\n\n\n\n\nResume\n\n\n\n\n\n\nQuarto\n\n\nLaTeX\n\n\n\n\n\n\n\n\n\nFeb 23, 2025\n\n\nScott Townsend\n\n\n\n\n\n\n\n\n\n\n\n\nSpatial Charts in R\n\n\n\n\n\n\nR\n\n\nDataviz\n\n\n\n\n\n\n\n\n\nFeb 23, 2025\n\n\nScott Townsend\n\n\n\n\n\n\n\n\n\n\n\n\nWeek 3\n\n\n\n\n\n\nnews\n\n\ncode\n\n\n\n\n\n\n\n\n\nFeb 11, 2025\n\n\nScott Townsend\n\n\n\n\n\n\n\n\n\n\n\n\nWeek 2\n\n\n\n\n\n\nnews\n\n\ncode\n\n\n\n\n\n\n\n\n\nFeb 4, 2025\n\n\nScott Townsend\n\n\n\n\n\n\n\n\n\n\n\n\nWeek 1\n\n\n\n\n\n\nnews\n\n\nanalysis\n\n\n\n\n\n\n\n\n\nJan 27, 2025\n\n\nScott Townsend\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/Week_01/index.html#text-preprocessing",
@@ -243,5 +243,26 @@
     "title": "Ridgelines in Python",
     "section": "",
     "text": "Let’s illustrate how to create ridgeline plots using a simulated dataset of monthly temperature distributions. We’ll utilize the seaborn and matplotlib libraries, which are essential for this task.\nFirst, ensure you have the necessary libraries installed:\nimport matplotlib.pyplot as plt\nimport seaborn as sns\nimport pandas as pd\nimport numpy as np\n\nnp.random.seed(123)\n\nmonths = ['January', 'February', 'March', 'April', 'May', 'June', \n          'July', 'August', 'September', 'October', 'November', 'December']\nn = 100\n\ndata = pd.DataFrame({\n    'month': np.repeat(months, n),\n    'temperature': np.concatenate([\n        np.random.normal(20, 5, n),    # January\n        np.random.normal(25, 6, n),    # February\n        np.random.normal(30, 7, n),    # March\n        np.random.normal(40, 8, n),    # April\n        np.random.normal(50, 9, n),    # May\n        np.random.normal(60, 10, n),   # June\n        np.random.normal(65, 10, n),   # July\n        np.random.normal(62, 9, n),    # August\n        np.random.normal(55, 8, n),    # September\n        np.random.normal(45, 7, n),    # October\n        np.random.normal(35, 6, n),    # November\n        np.random.normal(28, 5, n)     # December\n    ])\n})\n\ndata['month'] = pd.Categorical(data['month'], categories=months, ordered=True)\n\nplt.figure(figsize=(10, 8))\nsns.set_theme(style=\"white\", rc={\"axes.facecolor\": (0, 0, 0, 0)})\n\ng = sns.FacetGrid(data, row=\"month\", hue=\"month\", aspect=15, height=0.5, palette=\"plasma\", row_order=months[::-1])  \n\ng.map_dataframe(sns.kdeplot, \"temperature\", fill=True, alpha=1)\n\ndef add_median(data, **kwargs):\n    median = data['temperature'].median()\n    plt.axvline(median, color='black', linestyle='--', linewidth=1)\n\ng.map_dataframe(add_median)\n\ndef label(data, color, label): \n    ax = plt.gca()\n    ax.text(0, 0.2, label, fontweight=\"bold\", color=color, ha=\"left\", va=\"center\", transform=ax.transAxes)\n\ng.map_dataframe(label)\n\ng.set_titles(\"\")\ng.set(yticks=[])\ng.despine(left=True)\ng.fig.subplots_adjust(hspace=-0.25)\ng.set_axis_labels(\"Average temperature (F)\", \"\")\ng.fig.suptitle(\"Monthly Temperature Distribution\", fontsize=16)\n\nplt.show()\nThis python code should create the following chart:"
+  },
+  {
+    "objectID": "posts/Spatial/index.html",
+    "href": "posts/Spatial/index.html",
+    "title": "Spatial Charts in R",
+    "section": "",
+    "text": "Spatial charts are a powerful way to visualize geographic data, allowing for insightful analysis of regional trends, patterns, and distributions. In R, spatial charts can be created using libraries like ggplot2, sf, and USAboundaries, among others.\nHere is one I created in R!\n\n\n\nGeographical Insights: Easily identify trends that vary across regions.\nEnhanced Data Interpretation: Spot high-density areas, hot spots, or outliers.\nInteractive Potential: Use tools like plotly to make maps dynamic and exploratory.\n\n\n\nlibrary(USAboundaries)\nlibrary(tidyverse)\nlibrary(sf)\nlibrary(ggplot2)\nlibrary(plotly)\n\nwest_virginia_counties &lt;- us_counties() %&gt;%\n  select(geoid, name, state_abbr, geometry) %&gt;%  \n  filter(state_abbr == \"WV\") %&gt;%\n  mutate(population = runif(n(), 5000, 1000000)) %&gt;%  \n  mutate(pop_density = population / as.numeric(st_area(geometry))) \n\nwv_map &lt;- ggplot() +\n  geom_sf(data = virginia_counties, aes(fill = log1p(pop_density), text = name), color = \"white\") +\n  scale_fill_viridis_c(option = \"magma\", name = \"Pop Density (log)\") +\n  labs(\n    title = \"Population Density by County in West Virginia\",\n    subtitle = \"Log-transformed for better visualization\",\n    caption = \"Source: USAboundaries R package\"\n  ) +\n  theme_minimal()\n\nggplotly(wv_map, tooltip = \"text\")"
+  },
+  {
+    "objectID": "posts/Spatial/index.html#why-use-spatial-charts",
+    "href": "posts/Spatial/index.html#why-use-spatial-charts",
+    "title": "Spatial Charts in R",
+    "section": "",
+    "text": "Geographical Insights: Easily identify trends that vary across regions.\nEnhanced Data Interpretation: Spot high-density areas, hot spots, or outliers.\nInteractive Potential: Use tools like plotly to make maps dynamic and exploratory."
+  },
+  {
+    "objectID": "posts/Spatial/index.html#how-to-make-them",
+    "href": "posts/Spatial/index.html#how-to-make-them",
+    "title": "Spatial Charts in R",
+    "section": "",
+    "text": "library(USAboundaries)\nlibrary(tidyverse)\nlibrary(sf)\nlibrary(ggplot2)\nlibrary(plotly)\n\nwest_virginia_counties &lt;- us_counties() %&gt;%\n  select(geoid, name, state_abbr, geometry) %&gt;%  \n  filter(state_abbr == \"WV\") %&gt;%\n  mutate(population = runif(n(), 5000, 1000000)) %&gt;%  \n  mutate(pop_density = population / as.numeric(st_area(geometry))) \n\nwv_map &lt;- ggplot() +\n  geom_sf(data = virginia_counties, aes(fill = log1p(pop_density), text = name), color = \"white\") +\n  scale_fill_viridis_c(option = \"magma\", name = \"Pop Density (log)\") +\n  labs(\n    title = \"Population Density by County in West Virginia\",\n    subtitle = \"Log-transformed for better visualization\",\n    caption = \"Source: USAboundaries R package\"\n  ) +\n  theme_minimal()\n\nggplotly(wv_map, tooltip = \"text\")"
   }
 ]
