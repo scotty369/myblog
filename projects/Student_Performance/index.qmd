@@ -70,8 +70,6 @@ Bias analysis examined potential differences in **math scores between genders** 
 - The analysis confirmed that the model does not introduce biases, as the differences in scores align with the dataset's inherent distribution.
 
 ## **VI. Python Notebooks**
-### **Project Category:**
-1. **All requirements were met**, and additional work was done to demonstrate creativity and excellence.  
 
 **Colab Notebook:**  
 [Personal Project Link](https://colab.research.google.com/drive/1romN7rSYlLUdeQDgiWT-y3XRiqSOpjlc#scrollTo=5qOt5Qg8osWy)
