@@ -1,0 +1,10 @@
+---
+date: '2025-02-18'
+title: Crime Statistics Analysis
+categories: [Python, Dataviz]
+image: profile.jpeg
+title-block-banner: false
+---
+
+# **Crime Statstics Analysis**
+
