@@ -14,30 +14,7 @@ This analysis will dive into data from four leading streaming platforms—Netfli
 
 ### Distribution of Movie/Show Durations by Streaming Service
 
-![](pic1.png){width="500"}
-
-The violin plot reveals a striking contrast in content duration across platforms. Amazon Prime stands out with the broadest range, extending to exceptionally lengthy content (up to 600 minutes), suggesting a focus on longer films and series. In contrast, Disney+ exhibits the shortest content range, implying a preference for more concise viewing experiences.  Netflix and Hulu fall somewhere in between, with Netflix showing a slightly wider spread than Hulu. 
-
-### Number of Titles Added Over Time
-
-![](pic2.png){width="1000"}
-
-This chart highlights the aggressive content acquisition strategy employed by Netflix.  Starting around 2016, Netflix embarked on a dramatic expansion of its library, consistently adding new titles at a pace that far surpassed its competitors.  While other platforms also increased their offerings, their growth trajectories were notably less steep, underscoring Netflix's commitment to content dominance.
-
-### Distribution of Movie Ratings Across Platforms
-
-![](pic3.png){width="1000"}
-
-The distribution of movie ratings reveals distinct content preferences across platforms.  Amazon Prime caters to a more mature audience with a significant concentration of TV-MA rated content. In contrast, Disney+ likely focuses on family-friendly viewing, as suggested by its lower proportion of mature ratings (though specific data on G and PG ratings is not available here). Netflix and Hulu demonstrate a more balanced approach, offering a mix of ratings to appeal to a broader audience.
-
-## *Conclusion:*
-
-This analysis has illuminated key differences in content strategies across the four streaming platforms. Each exhibits distinct trends in content offerings, duration, and release timing, catering to diverse viewer preferences.  Amazon Prime, with its extensive library and broad range of content durations, including a substantial offering of mature titles, appears to prioritize attracting a diverse and mature audience.  Netflix, while showing signs of slowing growth in recent years, still boasts a massive library and a history of aggressive content acquisition, suggesting a focus on breadth and variety. 
-
-
-## Code used for analysis:
-
-```zsh
+```{python}
 import pandas as pd
 import polars as pl
 import seaborn as sns
@@ -86,7 +63,13 @@ plt.xlabel("Streaming Service")
 plt.ylabel("Duration (Minutes)")
 plt.xticks(rotation=45)
 plt.show()
+```
 
+The violin plot reveals a striking contrast in content duration across platforms. Amazon Prime stands out with the broadest range, extending to exceptionally lengthy content (up to 600 minutes), suggesting a focus on longer films and series. In contrast, Disney+ exhibits the shortest content range, implying a preference for more concise viewing experiences.  Netflix and Hulu fall somewhere in between, with Netflix showing a slightly wider spread than Hulu. 
+
+### Number of Titles Added Over Time
+
+```{python}
 plt.figure(figsize=(18, 6))
 df_yearly = data.groupby(["year_added", "platform"]).size().reset_index(name="count")
 sns.lineplot(data=df_yearly, x="year_added", y="count", hue="platform", marker="o")
@@ -95,7 +78,13 @@ plt.xlabel("Year")
 plt.ylabel("Number of Titles")
 plt.legend(title="Streaming Service")
 plt.show()
+```
 
+This chart highlights the aggressive content acquisition strategy employed by Netflix.  Starting around 2016, Netflix embarked on a dramatic expansion of its library, consistently adding new titles at a pace that far surpassed its competitors.  While other platforms also increased their offerings, their growth trajectories were notably less steep, underscoring Netflix's commitment to content dominance.
+
+### Distribution of Movie Ratings Across Platforms
+
+```{python}
 plt.figure(figsize=(30, 6))
 sns.histplot(data=data, x="rating", hue="platform", multiple="stack", palette="Set1", shrink=0.8)
 plt.title("Distribution of Movie Ratings Across Platforms")
@@ -105,3 +94,10 @@ plt.xticks(rotation=45)
 plt.legend(title="Streaming Service")
 plt.show()
 ```
+
+The distribution of movie ratings reveals distinct content preferences across platforms.  Amazon Prime caters to a more mature audience with a significant concentration of TV-MA rated content. In contrast, Disney+ likely focuses on family-friendly viewing, as suggested by its lower proportion of mature ratings (though specific data on G and PG ratings is not available here). Netflix and Hulu demonstrate a more balanced approach, offering a mix of ratings to appeal to a broader audience.
+
+## *Conclusion:*
+
+This analysis has illuminated key differences in content strategies across the four streaming platforms. Each exhibits distinct trends in content offerings, duration, and release timing, catering to diverse viewer preferences.  Amazon Prime, with its extensive library and broad range of content durations, including a substantial offering of mature titles, appears to prioritize attracting a diverse and mature audience.  Netflix, while showing signs of slowing growth in recent years, still boasts a massive library and a history of aggressive content acquisition, suggesting a focus on breadth and variety. 
+
