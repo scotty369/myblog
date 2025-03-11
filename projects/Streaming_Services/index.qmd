@@ -6,6 +6,8 @@ image: profile.jpeg
 title-block-banner: false
 ---
 
+You can slide the charts around to focus on different aspects of it or see different parts. 
+
 # **Streaming Services Analysis**
 
 ## *Analysis Overview:*

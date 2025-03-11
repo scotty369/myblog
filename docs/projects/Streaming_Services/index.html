@@ -193,6 +193,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<p>You can slide the charts around to focus on different aspects of it or see different parts.</p>
 <section id="streaming-services-analysis" class="level1">
 <h1><strong>Streaming Services Analysis</strong></h1>
 <section id="analysis-overview" class="level2">
@@ -200,7 +201,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>This analysis will dive into data from four leading streaming platforms—Netflix, Hulu, Amazon Prime, and Disney+—to explore trends, viewership patterns, and key performance metrics. By examining each service’s unique offerings and subscriber behaviors, we aim to uncover insights that highlight their market positions and user preferences in the ever-evolving digital entertainment landscape.</p>
 <section id="distribution-of-movieshow-durations-by-streaming-service" class="level3">
 <h3 class="anchored" data-anchor-id="distribution-of-movieshow-durations-by-streaming-service">Distribution of Movie/Show Durations by Streaming Service</h3>
-<div id="41c49225" class="cell" data-execution_count="1">
+<div id="2e841aeb" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> polars <span class="im">as</span> pl</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
@@ -250,7 +251,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">45</span>)</span>
 <span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/var/folders/zs/zycd14f96ks5gpx0bsb97xtr0000gn/T/ipykernel_81640/3666423932.py:43: FutureWarning:
+<pre><code>/var/folders/zs/zycd14f96ks5gpx0bsb97xtr0000gn/T/ipykernel_83106/3666423932.py:43: FutureWarning:
 
 
 
@@ -270,7 +271,7 @@ Passing `palette` without assigning `hue` is deprecated and will be removed in v
 </section>
 <section id="number-of-titles-added-over-time" class="level3">
 <h3 class="anchored" data-anchor-id="number-of-titles-added-over-time">Number of Titles Added Over Time</h3>
-<div id="29dad22f" class="cell" data-execution_count="2">
+<div id="c3368526" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">18</span>, <span class="dv">6</span>))</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df_yearly <span class="op">=</span> data.groupby([<span class="st">"year_added"</span>, <span class="st">"platform"</span>]).size().reset_index(name<span class="op">=</span><span class="st">"count"</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>sns.lineplot(data<span class="op">=</span>df_yearly, x<span class="op">=</span><span class="st">"year_added"</span>, y<span class="op">=</span><span class="st">"count"</span>, hue<span class="op">=</span><span class="st">"platform"</span>, marker<span class="op">=</span><span class="st">"o"</span>)</span>
@@ -291,7 +292,7 @@ Passing `palette` without assigning `hue` is deprecated and will be removed in v
 </section>
 <section id="distribution-of-movie-ratings-across-platforms" class="level3">
 <h3 class="anchored" data-anchor-id="distribution-of-movie-ratings-across-platforms">Distribution of Movie Ratings Across Platforms</h3>
-<div id="d211f113" class="cell" data-execution_count="3">
+<div id="378d69c0" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">30</span>, <span class="dv">6</span>))</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>sns.histplot(data<span class="op">=</span>data, x<span class="op">=</span><span class="st">"rating"</span>, hue<span class="op">=</span><span class="st">"platform"</span>, multiple<span class="op">=</span><span class="st">"stack"</span>, palette<span class="op">=</span><span class="st">"Set1"</span>, shrink<span class="op">=</span><span class="fl">0.8</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Distribution of Movie Ratings Across Platforms"</span>)</span>
@@ -301,7 +302,7 @@ Passing `palette` without assigning `hue` is deprecated and will be removed in v
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>plt.legend(title<span class="op">=</span><span class="st">"Streaming Service"</span>)</span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/var/folders/zs/zycd14f96ks5gpx0bsb97xtr0000gn/T/ipykernel_81640/2575985119.py:7: UserWarning:
+<pre><code>/var/folders/zs/zycd14f96ks5gpx0bsb97xtr0000gn/T/ipykernel_83106/2575985119.py:7: UserWarning:
 
 No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
 </code></pre>
