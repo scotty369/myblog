@@ -166,7 +166,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Streaming Services Analysis</h1>
+<div class="quarto-title-block"><div><h1 class="title">Streaming Services Analysis</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
   <div class="quarto-categories">
     <div class="quarto-category">Python</div>
     <div class="quarto-category">Dataviz</div>
@@ -201,7 +201,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>This analysis will dive into data from four leading streaming platforms—Netflix, Hulu, Amazon Prime, and Disney+—to explore trends, viewership patterns, and key performance metrics. By examining each service’s unique offerings and subscriber behaviors, we aim to uncover insights that highlight their market positions and user preferences in the ever-evolving digital entertainment landscape.</p>
 <section id="distribution-of-movieshow-durations-by-streaming-service" class="level3">
 <h3 class="anchored" data-anchor-id="distribution-of-movieshow-durations-by-streaming-service">Distribution of Movie/Show Durations by Streaming Service</h3>
-<div id="2e841aeb" class="cell" data-execution_count="1">
+<div id="df8776a4" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> polars <span class="im">as</span> pl</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
@@ -251,7 +251,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">45</span>)</span>
 <span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/var/folders/zs/zycd14f96ks5gpx0bsb97xtr0000gn/T/ipykernel_83106/3666423932.py:43: FutureWarning:
+<pre><code>/var/folders/zs/zycd14f96ks5gpx0bsb97xtr0000gn/T/ipykernel_87051/3666423932.py:43: FutureWarning:
 
 
 
@@ -271,7 +271,7 @@ Passing `palette` without assigning `hue` is deprecated and will be removed in v
 </section>
 <section id="number-of-titles-added-over-time" class="level3">
 <h3 class="anchored" data-anchor-id="number-of-titles-added-over-time">Number of Titles Added Over Time</h3>
-<div id="c3368526" class="cell" data-execution_count="2">
+<div id="bdd3d328" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">18</span>, <span class="dv">6</span>))</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df_yearly <span class="op">=</span> data.groupby([<span class="st">"year_added"</span>, <span class="st">"platform"</span>]).size().reset_index(name<span class="op">=</span><span class="st">"count"</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>sns.lineplot(data<span class="op">=</span>df_yearly, x<span class="op">=</span><span class="st">"year_added"</span>, y<span class="op">=</span><span class="st">"count"</span>, hue<span class="op">=</span><span class="st">"platform"</span>, marker<span class="op">=</span><span class="st">"o"</span>)</span>
@@ -292,7 +292,7 @@ Passing `palette` without assigning `hue` is deprecated and will be removed in v
 </section>
 <section id="distribution-of-movie-ratings-across-platforms" class="level3">
 <h3 class="anchored" data-anchor-id="distribution-of-movie-ratings-across-platforms">Distribution of Movie Ratings Across Platforms</h3>
-<div id="378d69c0" class="cell" data-execution_count="3">
+<div id="09806838" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">30</span>, <span class="dv">6</span>))</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>sns.histplot(data<span class="op">=</span>data, x<span class="op">=</span><span class="st">"rating"</span>, hue<span class="op">=</span><span class="st">"platform"</span>, multiple<span class="op">=</span><span class="st">"stack"</span>, palette<span class="op">=</span><span class="st">"Set1"</span>, shrink<span class="op">=</span><span class="fl">0.8</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Distribution of Movie Ratings Across Platforms"</span>)</span>
@@ -302,7 +302,7 @@ Passing `palette` without assigning `hue` is deprecated and will be removed in v
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>plt.legend(title<span class="op">=</span><span class="st">"Streaming Service"</span>)</span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/var/folders/zs/zycd14f96ks5gpx0bsb97xtr0000gn/T/ipykernel_83106/2575985119.py:7: UserWarning:
+<pre><code>/var/folders/zs/zycd14f96ks5gpx0bsb97xtr0000gn/T/ipykernel_87051/2575985119.py:7: UserWarning:
 
 No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
 </code></pre>
@@ -322,6 +322,8 @@ No artists with labels found to put in legend.  Note that artists whose label st
 <h2 class="anchored" data-anchor-id="conclusion"><em>Conclusion:</em></h2>
 <p>This analysis has illuminated key differences in content strategies across the four streaming platforms. Each exhibits distinct trends in content offerings, duration, and release timing, catering to diverse viewer preferences. Amazon Prime, with its extensive library and broad range of content durations, including a substantial offering of mature titles, appears to prioritize attracting a diverse and mature audience. Netflix, while showing signs of slowing growth in recent years, still boasts a massive library and a history of aggressive content acquisition, suggesting a focus on breadth and variety.</p>
 
+
+<!-- -->
 
 </section>
 </section>
@@ -406,6 +408,57 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -735,7 +788,115 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>
+</script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb6" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> '2025-03-10'</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> Streaming Services Analysis</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [Python, Dataviz]</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="an">image:</span><span class="co"> profile.jpeg</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="an">title-block-banner:</span><span class="co"> false</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="an">code-folding:</span><span class="co"> show</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="an">code-tools:</span><span class="co"> true</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="an">code-block-bg:</span><span class="co"> false</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>You can slide the charts around to focus on different aspects of it or see different parts. </span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="fu"># **Streaming Services Analysis**</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="fu">## *Analysis Overview:*</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>This analysis will dive into data from four leading streaming platforms—Netflix, Hulu, Amazon Prime, and Disney+—to explore trends, viewership patterns, and key performance metrics. By examining each service's unique offerings and subscriber behaviors, we aim to uncover insights that highlight their market positions and user preferences in the ever-evolving digital entertainment landscape.</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="fu">### Distribution of Movie/Show Durations by Streaming Service</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="in">```{python, message=FALSE, warning=FALSE}</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="in">import pandas as pd</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="in">import polars as pl</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="in">import seaborn as sns</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="in">import matplotlib.pyplot as plt</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="in"># --- Load Data ---</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="in">disney = pl.read_csv("/Users/scotttow123/Documents/Streaming_Services/Data/disney_plus_titles.csv")</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="in">hulu = pl.read_csv("/Users/scotttow123/Documents/Streaming_Services/Data/hulu_titles.csv")</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="in">netflix = pl.read_csv("/Users/scotttow123/Documents/Streaming_Services/Data/netflix_titles.csv")</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="in">prime = pd.read_csv("/Users/scotttow123/Documents/Streaming_Services/Data/amazon_prime_titles.csv")</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="in">disney = disney.with_columns(pl.lit("Disney+").alias("platform"))</span></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a><span class="in">hulu = hulu.with_columns(pl.lit("Hulu").alias("platform"))</span></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="in">netflix = netflix.with_columns(pl.lit("Netflix").alias("platform"))</span></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a><span class="in">disney = disney.to_pandas()</span></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a><span class="in">hulu = hulu.to_pandas()</span></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a><span class="in">netflix = netflix.to_pandas()</span></span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a><span class="in">prime["platform"] = "Amazon Prime"</span></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a><span class="in">data = pd.concat([disney, hulu, netflix, prime], ignore_index=True)</span></span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a><span class="in">def convert_duration(duration):</span></span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a><span class="in">    if pd.isna(duration):</span></span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a><span class="in">        return None</span></span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a><span class="in">    duration = str(duration).lower()</span></span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a><span class="in">    if "min" in duration:</span></span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a><span class="in">        return int(duration.replace(" min", ""))</span></span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a><span class="in">    elif "h" in duration:</span></span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a><span class="in">        parts = duration.split(" ")</span></span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a><span class="in">        hours = int(parts[0].replace("h", "")) * 60</span></span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a><span class="in">        minutes = int(parts[1].replace("min", "")) if len(parts) &gt; 1 else 0</span></span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a><span class="in">        return hours + minutes</span></span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a><span class="in">    return None</span></span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a><span class="in">data["duration_minutes"] = data["duration"].apply(convert_duration)</span></span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a><span class="in">data["date_added"] = pd.to_datetime(data["date_added"], errors="coerce")</span></span>
+<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a><span class="in">data["year_added"] = data["date_added"].dt.year</span></span>
+<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a><span class="in">plt.figure(figsize=(8, 6))</span></span>
+<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a><span class="in">sns.violinplot(data=data, x="platform", y="duration_minutes", palette="Set2")</span></span>
+<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a><span class="in">plt.title("Distribution of Movie/Show Durations by Streaming Service")</span></span>
+<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a><span class="in">plt.xlabel("Streaming Service")</span></span>
+<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a><span class="in">plt.ylabel("Duration (Minutes)")</span></span>
+<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a><span class="in">plt.xticks(rotation=45)</span></span>
+<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a><span class="in">plt.show()</span></span>
+<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a>The violin plot reveals a striking contrast in content duration across platforms. Amazon Prime stands out with the broadest range, extending to exceptionally lengthy content (up to 600 minutes), suggesting a focus on longer films and series. In contrast, Disney+ exhibits the shortest content range, implying a preference for more concise viewing experiences.  Netflix and Hulu fall somewhere in between, with Netflix showing a slightly wider spread than Hulu. </span>
+<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a><span class="fu">### Number of Titles Added Over Time</span></span>
+<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a><span class="in">```{python, message=FALSE, warning=FALSE}</span></span>
+<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a><span class="in">plt.figure(figsize=(18, 6))</span></span>
+<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a><span class="in">df_yearly = data.groupby(["year_added", "platform"]).size().reset_index(name="count")</span></span>
+<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a><span class="in">sns.lineplot(data=df_yearly, x="year_added", y="count", hue="platform", marker="o")</span></span>
+<span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a><span class="in">plt.title("Number of Titles Added Over Time")</span></span>
+<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a><span class="in">plt.xlabel("Year")</span></span>
+<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a><span class="in">plt.ylabel("Number of Titles")</span></span>
+<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a><span class="in">plt.legend(title="Streaming Service")</span></span>
+<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a><span class="in">plt.show()</span></span>
+<span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-87"><a href="#cb6-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-88"><a href="#cb6-88" aria-hidden="true" tabindex="-1"></a>This chart highlights the aggressive content acquisition strategy employed by Netflix.  Starting around 2016, Netflix embarked on a dramatic expansion of its library, consistently adding new titles at a pace that far surpassed its competitors.  While other platforms also increased their offerings, their growth trajectories were notably less steep, underscoring Netflix's commitment to content dominance.</span>
+<span id="cb6-89"><a href="#cb6-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-90"><a href="#cb6-90" aria-hidden="true" tabindex="-1"></a><span class="fu">### Distribution of Movie Ratings Across Platforms</span></span>
+<span id="cb6-91"><a href="#cb6-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-92"><a href="#cb6-92" aria-hidden="true" tabindex="-1"></a><span class="in">```{python, message=FALSE, warning=FALSE}</span></span>
+<span id="cb6-93"><a href="#cb6-93" aria-hidden="true" tabindex="-1"></a><span class="in">plt.figure(figsize=(30, 6))</span></span>
+<span id="cb6-94"><a href="#cb6-94" aria-hidden="true" tabindex="-1"></a><span class="in">sns.histplot(data=data, x="rating", hue="platform", multiple="stack", palette="Set1", shrink=0.8)</span></span>
+<span id="cb6-95"><a href="#cb6-95" aria-hidden="true" tabindex="-1"></a><span class="in">plt.title("Distribution of Movie Ratings Across Platforms")</span></span>
+<span id="cb6-96"><a href="#cb6-96" aria-hidden="true" tabindex="-1"></a><span class="in">plt.xlabel("Rating")</span></span>
+<span id="cb6-97"><a href="#cb6-97" aria-hidden="true" tabindex="-1"></a><span class="in">plt.ylabel("Count of Titles")</span></span>
+<span id="cb6-98"><a href="#cb6-98" aria-hidden="true" tabindex="-1"></a><span class="in">plt.xticks(rotation=45)</span></span>
+<span id="cb6-99"><a href="#cb6-99" aria-hidden="true" tabindex="-1"></a><span class="in">plt.legend(title="Streaming Service")</span></span>
+<span id="cb6-100"><a href="#cb6-100" aria-hidden="true" tabindex="-1"></a><span class="in">plt.show()</span></span>
+<span id="cb6-101"><a href="#cb6-101" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-102"><a href="#cb6-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-103"><a href="#cb6-103" aria-hidden="true" tabindex="-1"></a>The distribution of movie ratings reveals distinct content preferences across platforms.  Amazon Prime caters to a more mature audience with a significant concentration of TV-MA rated content. In contrast, Disney+ likely focuses on family-friendly viewing, as suggested by its lower proportion of mature ratings (though specific data on G and PG ratings is not available here). Netflix and Hulu demonstrate a more balanced approach, offering a mix of ratings to appeal to a broader audience.</span>
+<span id="cb6-104"><a href="#cb6-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-105"><a href="#cb6-105" aria-hidden="true" tabindex="-1"></a><span class="fu">## *Conclusion:*</span></span>
+<span id="cb6-106"><a href="#cb6-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-107"><a href="#cb6-107" aria-hidden="true" tabindex="-1"></a>This analysis has illuminated key differences in content strategies across the four streaming platforms. Each exhibits distinct trends in content offerings, duration, and release timing, catering to diverse viewer preferences.  Amazon Prime, with its extensive library and broad range of content durations, including a substantial offering of mature titles, appears to prioritize attracting a diverse and mature audience.  Netflix, while showing signs of slowing growth in recent years, still boasts a massive library and a history of aggressive content acquisition, suggesting a focus on breadth and variety. </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
 </div> <!-- /content -->
 
 
