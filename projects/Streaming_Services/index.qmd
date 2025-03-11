@@ -12,58 +12,24 @@ title-block-banner: false
 
 This analysis will dive into data from four leading streaming platforms—Netflix, Hulu, Amazon Prime, and Disney+—to explore trends, viewership patterns, and key performance metrics. By examining each service's unique offerings and subscriber behaviors, we aim to uncover insights that highlight their market positions and user preferences in the ever-evolving digital entertainment landscape.
 
-## *Content Volume and Trends*
+### Distribution of Movie/Show Durations by Streaming Service
 
-### Distribution of Content by Platform
+![](pic1.png){width="500"}
 
-![](Plot1.png){width="500"}
+The violin plot reveals a striking contrast in content duration across platforms. Amazon Prime stands out with the broadest range, extending to exceptionally lengthy content (up to 600 minutes), suggesting a focus on longer films and series. In contrast, Disney+ exhibits the shortest content range, implying a preference for more concise viewing experiences.  Netflix and Hulu fall somewhere in between, with Netflix showing a slightly wider spread than Hulu. 
 
-This visualization illustrates the proportion of the different platforms and their count of releases throughout the years. It appears that Amazon Prime has the highest count of releases for now, with Netflix close behind. 
+### Number of Titles Added Over Time
 
-### Content Count Over Time 
+![](pic2.png){width="500"}
 
-![](Pic3.png){width="500"}
+This chart highlights the aggressive content acquisition strategy employed by Netflix.  Starting around 2016, Netflix embarked on a dramatic expansion of its library, consistently adding new titles at a pace that far surpassed its competitors.  While other platforms also increased their offerings, their growth trajectories were notably less steep, underscoring Netflix's commitment to content dominance.
 
-This line graph tracks the growth in content offerings for each platform over time. We can see here that among the platforms Amazon Prime again has the highest release count through the years. Although, Disney+ seems to have remained steady with their releases over time. 
+### Distribution of Movie Ratings Across Platforms
 
-### Movies and TV Shows Released Over Time
+![](pic3.png){width="500"}
 
-![](Pic5.png){width="500"}
-
-This visualization highlights the release patterns of movies and TV shows over time across all platforms. This graphic displays how much more prominent TV shows has become over the years with their value increasing more than Movies have. 
-
-## *Content Duration Analysis*
-
-### Duration of Content by Platform
-
-![](Pic2.png){width="500"}
-
-This plot provides a comparative analysis of the average content duration on each platform. We have Movie and TV shows being displayed, and it appears that Amazon Prime has the longest duration in both movies and tv shows, while Disney+ has the shortest. 
-
-### Content Duration Boxplot
-
-![](Pic4.png){width="500"}
-
-This is another boxplot that examines the variation in content duration across all platforms, showing again how Amazon Prime dominates in terms of content duration with Netflix coming in second place. 
-
-### Rating Distribution by Platform
-
-![](Pic8.png){width="500"}
-
-Here is one final boxplot offering a unique point of view displaying the distribution of ratings across the different platforms. It's interesting seeing the different shapes/sizes of each box plot. Amazon Prime seems to have the widest distribution of ratings compared to the rest. 
-
-### Content Duration vs. Release Year
-
-![](Pic6.png){width="500"}
-
-This chart explores the relationship between content duration and release year. Something interesting worth noting is how dominant Amazon Prime seems to be in this graphic, which makes sense in terms of our other graphics. 
-
-### Release Year vs Duration, colored by Rating
-
-![](Pic7.png){width="500"}
-
-Here is one additional scatter plot, showing us a more unique view of the relase year vs duration, with the rating being colored. The blue and pink seems to stand out the most among all the other colors, indicating that TV-14 and TV-Y are the most popular.  
+The distribution of movie ratings reveals distinct content preferences across platforms.  Amazon Prime caters to a more mature audience with a significant concentration of TV-MA rated content. In contrast, Disney+ likely focuses on family-friendly viewing, as suggested by its lower proportion of mature ratings (though specific data on G and PG ratings is not available here). Netflix and Hulu demonstrate a more balanced approach, offering a mix of ratings to appeal to a broader audience.
 
 ## *Conclusion:*
 
-The analysis reveals key differences in content strategies across the four platforms, with distinct trends in content offerings, duration, and release timing. We were able to see how dominant Amazon Prime and even Netflix were across the different platforms, displaying their popularity.
+This analysis has illuminated key differences in content strategies across the four streaming platforms. Each exhibits distinct trends in content offerings, duration, and release timing, catering to diverse viewer preferences.  Amazon Prime, with its extensive library and broad range of content durations, including a substantial offering of mature titles, appears to prioritize attracting a diverse and mature audience.  Netflix, while showing signs of slowing growth in recent years, still boasts a massive library and a history of aggressive content acquisition, suggesting a focus on breadth and variety. 
