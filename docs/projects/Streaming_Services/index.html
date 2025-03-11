@@ -200,92 +200,126 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>This analysis will dive into data from four leading streaming platforms—Netflix, Hulu, Amazon Prime, and Disney+—to explore trends, viewership patterns, and key performance metrics. By examining each service’s unique offerings and subscriber behaviors, we aim to uncover insights that highlight their market positions and user preferences in the ever-evolving digital entertainment landscape.</p>
 <section id="distribution-of-movieshow-durations-by-streaming-service" class="level3">
 <h3 class="anchored" data-anchor-id="distribution-of-movieshow-durations-by-streaming-service">Distribution of Movie/Show Durations by Streaming Service</h3>
-<p><img src="pic1.png" class="img-fluid" width="500"></p>
+<div id="41c49225" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> polars <span class="im">as</span> pl</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Load Data ---</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>disney <span class="op">=</span> pl.read_csv(<span class="st">"/Users/scotttow123/Documents/Streaming_Services/Data/disney_plus_titles.csv"</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>hulu <span class="op">=</span> pl.read_csv(<span class="st">"/Users/scotttow123/Documents/Streaming_Services/Data/hulu_titles.csv"</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>netflix <span class="op">=</span> pl.read_csv(<span class="st">"/Users/scotttow123/Documents/Streaming_Services/Data/netflix_titles.csv"</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>prime <span class="op">=</span> pd.read_csv(<span class="st">"/Users/scotttow123/Documents/Streaming_Services/Data/amazon_prime_titles.csv"</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>disney <span class="op">=</span> disney.with_columns(pl.lit(<span class="st">"Disney+"</span>).alias(<span class="st">"platform"</span>))</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>hulu <span class="op">=</span> hulu.with_columns(pl.lit(<span class="st">"Hulu"</span>).alias(<span class="st">"platform"</span>))</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>netflix <span class="op">=</span> netflix.with_columns(pl.lit(<span class="st">"Netflix"</span>).alias(<span class="st">"platform"</span>))</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>disney <span class="op">=</span> disney.to_pandas()</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>hulu <span class="op">=</span> hulu.to_pandas()</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>netflix <span class="op">=</span> netflix.to_pandas()</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>prime[<span class="st">"platform"</span>] <span class="op">=</span> <span class="st">"Amazon Prime"</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.concat([disney, hulu, netflix, prime], ignore_index<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> convert_duration(duration):</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> pd.isna(duration):</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    duration <span class="op">=</span> <span class="bu">str</span>(duration).lower()</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">"min"</span> <span class="kw">in</span> duration:</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="bu">int</span>(duration.replace(<span class="st">" min"</span>, <span class="st">""</span>))</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> <span class="st">"h"</span> <span class="kw">in</span> duration:</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>        parts <span class="op">=</span> duration.split(<span class="st">" "</span>)</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>        hours <span class="op">=</span> <span class="bu">int</span>(parts[<span class="dv">0</span>].replace(<span class="st">"h"</span>, <span class="st">""</span>)) <span class="op">*</span> <span class="dv">60</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>        minutes <span class="op">=</span> <span class="bu">int</span>(parts[<span class="dv">1</span>].replace(<span class="st">"min"</span>, <span class="st">""</span>)) <span class="cf">if</span> <span class="bu">len</span>(parts) <span class="op">&gt;</span> <span class="dv">1</span> <span class="cf">else</span> <span class="dv">0</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> hours <span class="op">+</span> minutes</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>data[<span class="st">"duration_minutes"</span>] <span class="op">=</span> data[<span class="st">"duration"</span>].<span class="bu">apply</span>(convert_duration)</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>data[<span class="st">"date_added"</span>] <span class="op">=</span> pd.to_datetime(data[<span class="st">"date_added"</span>], errors<span class="op">=</span><span class="st">"coerce"</span>)</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>data[<span class="st">"year_added"</span>] <span class="op">=</span> data[<span class="st">"date_added"</span>].dt.year</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>sns.violinplot(data<span class="op">=</span>data, x<span class="op">=</span><span class="st">"platform"</span>, y<span class="op">=</span><span class="st">"duration_minutes"</span>, palette<span class="op">=</span><span class="st">"Set2"</span>)</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Distribution of Movie/Show Durations by Streaming Service"</span>)</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Streaming Service"</span>)</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Duration (Minutes)"</span>)</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">45</span>)</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/var/folders/zs/zycd14f96ks5gpx0bsb97xtr0000gn/T/ipykernel_81640/3666423932.py:43: FutureWarning:
+
+
+
+Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
+
+</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-2-output-2.png" width="667" height="588" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
 <p>The violin plot reveals a striking contrast in content duration across platforms. Amazon Prime stands out with the broadest range, extending to exceptionally lengthy content (up to 600 minutes), suggesting a focus on longer films and series. In contrast, Disney+ exhibits the shortest content range, implying a preference for more concise viewing experiences. Netflix and Hulu fall somewhere in between, with Netflix showing a slightly wider spread than Hulu.</p>
 </section>
 <section id="number-of-titles-added-over-time" class="level3">
 <h3 class="anchored" data-anchor-id="number-of-titles-added-over-time">Number of Titles Added Over Time</h3>
-<p><img src="pic2.png" class="img-fluid" width="1000"></p>
+<div id="29dad22f" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">18</span>, <span class="dv">6</span>))</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df_yearly <span class="op">=</span> data.groupby([<span class="st">"year_added"</span>, <span class="st">"platform"</span>]).size().reset_index(name<span class="op">=</span><span class="st">"count"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>sns.lineplot(data<span class="op">=</span>df_yearly, x<span class="op">=</span><span class="st">"year_added"</span>, y<span class="op">=</span><span class="st">"count"</span>, hue<span class="op">=</span><span class="st">"platform"</span>, marker<span class="op">=</span><span class="st">"o"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Number of Titles Added Over Time"</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Year"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Number of Titles"</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>plt.legend(title<span class="op">=</span><span class="st">"Streaming Service"</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-3-output-1.png" width="1420" height="523" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
 <p>This chart highlights the aggressive content acquisition strategy employed by Netflix. Starting around 2016, Netflix embarked on a dramatic expansion of its library, consistently adding new titles at a pace that far surpassed its competitors. While other platforms also increased their offerings, their growth trajectories were notably less steep, underscoring Netflix’s commitment to content dominance.</p>
 </section>
 <section id="distribution-of-movie-ratings-across-platforms" class="level3">
 <h3 class="anchored" data-anchor-id="distribution-of-movie-ratings-across-platforms">Distribution of Movie Ratings Across Platforms</h3>
-<p><img src="pic3.png" class="img-fluid" width="1000"></p>
+<div id="d211f113" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">30</span>, <span class="dv">6</span>))</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>sns.histplot(data<span class="op">=</span>data, x<span class="op">=</span><span class="st">"rating"</span>, hue<span class="op">=</span><span class="st">"platform"</span>, multiple<span class="op">=</span><span class="st">"stack"</span>, palette<span class="op">=</span><span class="st">"Set1"</span>, shrink<span class="op">=</span><span class="fl">0.8</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Distribution of Movie Ratings Across Platforms"</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Rating"</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Count of Titles"</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">45</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>plt.legend(title<span class="op">=</span><span class="st">"Streaming Service"</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/var/folders/zs/zycd14f96ks5gpx0bsb97xtr0000gn/T/ipykernel_81640/2575985119.py:7: UserWarning:
+
+No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-4-output-2.png" width="2313" height="574" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
 <p>The distribution of movie ratings reveals distinct content preferences across platforms. Amazon Prime caters to a more mature audience with a significant concentration of TV-MA rated content. In contrast, Disney+ likely focuses on family-friendly viewing, as suggested by its lower proportion of mature ratings (though specific data on G and PG ratings is not available here). Netflix and Hulu demonstrate a more balanced approach, offering a mix of ratings to appeal to a broader audience.</p>
 </section>
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion"><em>Conclusion:</em></h2>
 <p>This analysis has illuminated key differences in content strategies across the four streaming platforms. Each exhibits distinct trends in content offerings, duration, and release timing, catering to diverse viewer preferences. Amazon Prime, with its extensive library and broad range of content durations, including a substantial offering of mature titles, appears to prioritize attracting a diverse and mature audience. Netflix, while showing signs of slowing growth in recent years, still boasts a massive library and a history of aggressive content acquisition, suggesting a focus on breadth and variety.</p>
-</section>
-<section id="code-used-for-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="code-used-for-analysis">Code used for analysis:</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">import</span> pandas as pd</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">import</span> polars as pl</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">import</span> seaborn as sns</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">import</span> matplotlib.pyplot as plt</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Load Data ---</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ex">disney</span> <span class="kw">=</span> pl.read_csv<span class="op">(</span><span class="st">"/Users/scotttow123/Documents/Streaming_Services/Data/disney_plus_titles.csv"</span><span class="op">)</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ex">hulu</span> <span class="kw">=</span> pl.read_csv<span class="op">(</span><span class="st">"/Users/scotttow123/Documents/Streaming_Services/Data/hulu_titles.csv"</span><span class="op">)</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ex">netflix</span> <span class="kw">=</span> pl.read_csv<span class="op">(</span><span class="st">"/Users/scotttow123/Documents/Streaming_Services/Data/netflix_titles.csv"</span><span class="op">)</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="ex">prime</span> <span class="kw">=</span> pd.read_csv<span class="op">(</span><span class="st">"/Users/scotttow123/Documents/Streaming_Services/Data/amazon_prime_titles.csv"</span><span class="op">)</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ex">disney</span> <span class="kw">=</span> disney.with_columns<span class="pp">(</span><span class="ss">pl.lit</span><span class="pp">(</span><span class="st">"Disney+"</span><span class="pp">)</span><span class="ss">.alias</span><span class="pp">(</span><span class="st">"platform"</span><span class="pp">))</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="ex">hulu</span> <span class="kw">=</span> hulu.with_columns<span class="pp">(</span><span class="ss">pl.lit</span><span class="pp">(</span><span class="st">"Hulu"</span><span class="pp">)</span><span class="ss">.alias</span><span class="pp">(</span><span class="st">"platform"</span><span class="pp">))</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="ex">netflix</span> <span class="kw">=</span> netflix.with_columns<span class="pp">(</span><span class="ss">pl.lit</span><span class="pp">(</span><span class="st">"Netflix"</span><span class="pp">)</span><span class="ss">.alias</span><span class="pp">(</span><span class="st">"platform"</span><span class="pp">))</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="ex">disney</span> <span class="kw">=</span> disney.to_pandas<span class="op">()</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="ex">hulu</span> <span class="kw">=</span> hulu.to_pandas<span class="op">()</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="ex">netflix</span> <span class="kw">=</span> netflix.to_pandas<span class="op">()</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="va">prime</span><span class="op">[</span><span class="st">"platform"</span><span class="op">]</span> <span class="ex">=</span> <span class="st">"Amazon Prime"</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="ex">data</span> <span class="kw">=</span> pd.concat<span class="op">([</span>disney<span class="op">,</span> hulu<span class="op">,</span> netflix<span class="op">,</span> prime<span class="op">], ignore_index=True</span>)</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>def convert_duration(duration):</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    if pd.isna(duration):</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>        return None</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    duration = str(duration).lower()</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    if <span class="st">"min"</span> in duration:</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>        return int(duration.replace(<span class="st">" min"</span>, <span class="st">""</span>))</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="op">elif </span><span class="st">"h"</span><span class="op"> in d</span>uration:</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>        <span class="ex">parts</span> <span class="kw">=</span> duration.split<span class="op">(</span><span class="st">" "</span><span class="op">)</span></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>        <span class="ex">hours</span> <span class="kw">=</span> int<span class="pp">(</span><span class="ss">parts</span><span class="pp">[</span><span class="st">0</span><span class="pp">]</span><span class="ss">.replace</span><span class="pp">(</span><span class="st">"h"</span><span class="ss">, </span><span class="st">""</span><span class="pp">))</span> <span class="pp">*</span> 60</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>        <span class="ex">minutes</span> <span class="kw">=</span> int<span class="pp">(</span><span class="ss">parts</span><span class="pp">[</span><span class="st">1</span><span class="pp">]</span><span class="ss">.replace</span><span class="pp">(</span><span class="st">"min"</span><span class="ss">, </span><span class="st">""</span><span class="pp">))</span> if len<span class="op">(parts)</span> <span class="op">&gt;</span> 1 else 0</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="ex">hours</span> + minutes</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="ex">None</span></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="va">data</span><span class="op">[</span><span class="st">"duration_minutes"</span><span class="op">]</span> <span class="ex">=</span> data<span class="pp">[</span><span class="st">"duration"</span><span class="pp">]</span>.apply<span class="op">(co</span>n<span class="op">vert_d</span>uration<span class="op">)</span></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="va">data</span><span class="op">[</span><span class="st">"date_added"</span><span class="op">]</span> <span class="ex">=</span> pd.to_datetime<span class="pp">(</span><span class="ss">data</span><span class="pp">[</span><span class="st">"date_added"</span><span class="pp">]</span><span class="ss">, errors=</span><span class="st">"coerce"</span><span class="pp">)</span></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="va">data</span><span class="op">[</span><span class="st">"year_added"</span><span class="op">]</span> <span class="ex">=</span> data<span class="pp">[</span><span class="st">"date_added"</span><span class="pp">]</span>.dt.year</span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="ex">plt.figure</span><span class="er">(</span><span class="va">figsize</span><span class="op">=</span><span class="va">(</span>8, 6<span class="va">)</span><span class="kw">)</span></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="ex">sns.violinplot</span><span class="er">(</span><span class="va">data</span><span class="op">=</span>data, <span class="va">x</span><span class="op">=</span><span class="st">"platform"</span>, <span class="va">y</span><span class="op">=</span><span class="st">"duration_minutes"</span>, <span class="va">palette</span><span class="op">=</span><span class="st">"Set2"</span><span class="kw">)</span></span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="ex">plt.title</span><span class="er">(</span><span class="st">"Distribution of Movie/Show Durations by Streaming Service"</span><span class="kw">)</span></span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="ex">plt.xlabel</span><span class="er">(</span><span class="st">"Streaming Service"</span><span class="kw">)</span></span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="ex">plt.ylabel</span><span class="er">(</span><span class="st">"Duration (Minutes)"</span><span class="kw">)</span></span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="ex">plt.xticks</span><span class="er">(</span><span class="va">rotation</span><span class="op">=</span>45<span class="kw">)</span></span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="fu">plt.show()</span></span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="ex">plt.figure</span><span class="er">(</span><span class="va">figsize</span><span class="op">=</span><span class="va">(</span>18, 6<span class="va">)</span><span class="kw">)</span></span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="ex">df_yearly</span> <span class="kw">=</span> data.groupby<span class="pp">([</span><span class="st">"year_added", "platform"</span><span class="pp">])</span>.size<span class="pp">()</span>.reset_index<span class="op">(na</span>m<span class="op">e=</span><span class="st">"count"</span>)</span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>sns.lineplot(data<span class="op">=d</span>f_yearly<span class="op">, x=</span><span class="st">"year_added"</span><span class="op">, y=</span><span class="st">"count"</span><span class="op">, hue=</span><span class="st">"platform"</span><span class="op">, marker=</span><span class="st">"o"</span><span class="op">)</span></span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="ex">plt.title</span><span class="er">(</span><span class="st">"Number of Titles Added Over Time"</span><span class="kw">)</span></span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="ex">plt.xlabel</span><span class="er">(</span><span class="st">"Year"</span><span class="kw">)</span></span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a><span class="ex">plt.ylabel</span><span class="er">(</span><span class="st">"Number of Titles"</span><span class="kw">)</span></span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a><span class="ex">plt.legend</span><span class="er">(</span><span class="va">title</span><span class="op">=</span><span class="st">"Streaming Service"</span><span class="kw">)</span></span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a><span class="fu">plt.show()</span></span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="ex">plt.figure</span><span class="er">(</span><span class="va">figsize</span><span class="op">=</span><span class="va">(</span>30, 6<span class="va">)</span><span class="kw">)</span></span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="ex">sns.histplot</span><span class="er">(</span><span class="va">data</span><span class="op">=</span>data, <span class="va">x</span><span class="op">=</span><span class="st">"rating"</span>, <span class="va">hue</span><span class="op">=</span><span class="st">"platform"</span>, <span class="va">multiple</span><span class="op">=</span><span class="st">"stack"</span>, <span class="va">palette</span><span class="op">=</span><span class="st">"Set1"</span>, <span class="va">shrink</span><span class="op">=</span>0.8<span class="kw">)</span></span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a><span class="ex">plt.title</span><span class="er">(</span><span class="st">"Distribution of Movie Ratings Across Platforms"</span><span class="kw">)</span></span>
-<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a><span class="ex">plt.xlabel</span><span class="er">(</span><span class="st">"Rating"</span><span class="kw">)</span></span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a><span class="ex">plt.ylabel</span><span class="er">(</span><span class="st">"Count of Titles"</span><span class="kw">)</span></span>
-<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a><span class="ex">plt.xticks</span><span class="er">(</span><span class="va">rotation</span><span class="op">=</span>45<span class="kw">)</span></span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a><span class="ex">plt.legend</span><span class="er">(</span><span class="va">title</span><span class="op">=</span><span class="st">"Streaming Service"</span><span class="kw">)</span></span>
-<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a><span class="fu">plt.show()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>
