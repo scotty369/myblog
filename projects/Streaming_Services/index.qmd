@@ -20,13 +20,13 @@ The violin plot reveals a striking contrast in content duration across platforms
 
 ### Number of Titles Added Over Time
 
-![](pic2.png){width="500"}
+![](pic2.png){width="1000"}
 
 This chart highlights the aggressive content acquisition strategy employed by Netflix.  Starting around 2016, Netflix embarked on a dramatic expansion of its library, consistently adding new titles at a pace that far surpassed its competitors.  While other platforms also increased their offerings, their growth trajectories were notably less steep, underscoring Netflix's commitment to content dominance.
 
 ### Distribution of Movie Ratings Across Platforms
 
-![](pic3.png){width="500"}
+![](pic3.png){width="1000"}
 
 The distribution of movie ratings reveals distinct content preferences across platforms.  Amazon Prime caters to a more mature audience with a significant concentration of TV-MA rated content. In contrast, Disney+ likely focuses on family-friendly viewing, as suggested by its lower proportion of mature ratings (though specific data on G and PG ratings is not available here). Netflix and Hulu demonstrate a more balanced approach, offering a mix of ratings to appeal to a broader audience.
 
