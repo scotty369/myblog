@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="dcterms.date" content="2024-12-16">
 
-<title>Blog Posts</title>
+<title>scotty369 - Student Performance ML</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -79,7 +80,7 @@ ul.task-list li input[type="checkbox"] {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">Blog Posts</span>
+    <span class="navbar-title">scotty369</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -95,6 +96,10 @@ ul.task-list li input[type="checkbox"] {
   <li class="nav-item">
     <a class="nav-link" href="../../projects.html"> 
 <span class="menu-text">Projects</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html"> 
+<span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../files/resume.pdf"> 
@@ -125,11 +130,140 @@ ul.task-list li input[type="checkbox"] {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Student Performance ML</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Python</div>
+    <div class="quarto-category">ML</div>
+  </div>
+  </div>
 
 
 
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">December 16, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
 
 
+</header>
+
+
+<section id="machine-learning-analysis-report" class="level1">
+<h1><strong>Machine Learning Analysis Report</strong></h1>
+<section id="i.-data-preprocessing" class="level2">
+<h2 class="anchored" data-anchor-id="i.-data-preprocessing"><strong>I. Data Preprocessing</strong></h2>
+<p>The dataset, provided in CSV format, underwent an initial examination for missing values to ensure proper analysis. Categorical features, such as gender, race/ethnicity, and parental education level, were converted to numerical representations using one-hot encoding, improving compatibility with machine learning processing.</p>
+<p>Numerical features, including math, reading, and writing scores, were standardized using <code>StandardScaler</code> to eliminate scale biases and promote balanced model training. Additionally, a new feature, <code>average_score</code>, was introduced through feature engineering by calculating the mean of the three scores. This provided a target variable to enhance predictive modeling.</p>
+</section>
+<section id="ii.-selection-training-and-ml-model" class="level2">
+<h2 class="anchored" data-anchor-id="ii.-selection-training-and-ml-model"><strong>II. Selection, Training, and ML Model</strong></h2>
+<p>Two predictive models, <strong>Linear Regression</strong> and <strong>Random Forest Regressor</strong>, were used to analyze the dataset.</p>
+<ul>
+<li><strong>Linear Regression</strong> serves as a baseline model, offering simplicity and interpretability.<br>
+</li>
+<li><strong>Random Forest</strong> underwent hyperparameter tuning via <code>GridSearchCV</code>, optimizing parameters such as <code>max_depth</code> and <code>n_estimators</code> to enhance predictive power.</li>
+</ul>
+<p>The dataset was split into training and testing subsets (80/20) to ensure an unbiased evaluation of both models. Cross-validation was applied to the <strong>Linear Regression</strong> model to improve its generalizability. Meanwhile, the <strong>Random Forest</strong> model achieved excellent performance with optimized parameters, demonstrating its reliability.</p>
+</section>
+<section id="iii.-interpretation-of-results" class="level2">
+<h2 class="anchored" data-anchor-id="iii.-interpretation-of-results"><strong>III. Interpretation of Results</strong></h2>
+<p>Model performance was assessed using several metrics:</p>
+<ul>
+<li><strong>Mean Squared Error (MSE)</strong></li>
+<li><strong>R-squared</strong></li>
+<li><strong>Mean Absolute Error (MAE)</strong></li>
+<li><strong>Root Mean Squared Error (RMSE)</strong></li>
+</ul>
+<p>These evaluations confirmed the strengths of both models:</p>
+<ul>
+<li><strong>Linear Regression achieved an R-squared of 0.985</strong>, indicating high reliability.<br>
+</li>
+<li><strong>Random Forest achieved an R-squared of 0.973</strong>, validated through learning curves and cross-validation scores.</li>
+</ul>
+</section>
+<section id="iv.-communication-of-results" class="level2">
+<h2 class="anchored" data-anchor-id="iv.-communication-of-results"><strong>IV. Communication of Results</strong></h2>
+<p>The results were presented using simple and clear visuals:</p>
+<ul>
+<li><strong>Scatter plots</strong> of actual vs.&nbsp;predicted values showed how well each model performed.
+<ul>
+<li>Linear Regression had points clustered more tightly than Random Forest, indicating better prediction accuracy.<br>
+</li>
+</ul></li>
+<li><strong>Histograms of residuals</strong> demonstrated that errors were evenly spread, with no clear patterns or biases.<br>
+</li>
+<li><strong>Feature importance analysis</strong> highlighted the most influential factors affecting performance.<br>
+</li>
+<li><strong>Learning curves</strong> for the Random Forest model showcased its performance as the dataset size increased.</li>
+</ul>
+<section id="actual-vs.-predicted-chart" class="level3">
+<h3 class="anchored" data-anchor-id="actual-vs.-predicted-chart"><strong>Actual vs.&nbsp;Predicted Chart</strong></h3>
+<p>Below is an example of a visualization used to assess model performance:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="pic1.png" class="img-fluid figure-img"></p>
+<figcaption>Actual vs Predicted Chart</figcaption>
+</figure>
+</div>
+<p>The chart above compares the performance of <strong>Linear Regression</strong> and <strong>Random Forest</strong> models. Both align well with actual values, but Linear Regression shows slightly tighter clustering, indicating its predictions are closer to actual values compared to Random Forest.</p>
+</section>
+<section id="boxplot-displaying-math-reading-and-writing-scores-by-gender" class="level3">
+<h3 class="anchored" data-anchor-id="boxplot-displaying-math-reading-and-writing-scores-by-gender"><strong>Boxplot Displaying Math, Reading, and Writing Scores by Gender</strong></h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="boxplot.png" class="img-fluid figure-img"></p>
+<figcaption>Boxplot of Distribution by Gender</figcaption>
+</figure>
+</div>
+<p>The box plot shows a higher median math score for males, but also greater variability with more high and low outliers compared to females, who cluster closer to the average. This suggests that males are disproportionately represented at both ends of the math achievement spectrum, raising questions about contributing factors and the need for equitable educational practices.</p>
+</section>
+<section id="histograms-of-writing-reading-and-math-scores" class="level3">
+<h3 class="anchored" data-anchor-id="histograms-of-writing-reading-and-math-scores"><strong>Histograms of Writing, Reading, and Math Scores</strong></h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="histogram.png" class="img-fluid figure-img"></p>
+<figcaption>Histogram</figcaption>
+</figure>
+</div>
+<p>The histograms reveal that math scores exhibit a more left-skewed distribution, indicating a tendency towards lower scores, while reading and writing scores are more normally distributed, suggesting a wider range of performance centered around the average. Notably, writing scores show a slight right skew, implying a potential ceiling effect or a higher proportion of students achieving higher scores in writing.</p>
+</section>
+</section>
+<section id="v.-ethical-implications" class="level2">
+<h2 class="anchored" data-anchor-id="v.-ethical-implications"><strong>V. Ethical Implications</strong></h2>
+<p>Bias analysis examined potential differences in <strong>math scores between genders</strong> to ensure fairness in the model’s predictions.</p>
+<ul>
+<li>The model produced an <strong>average score of 63.63 for females</strong> and <strong>68.72 for males</strong>.<br>
+</li>
+<li>These findings highlight the importance of addressing potential biases in machine learning models to prevent reinforcement of societal inequalities.<br>
+</li>
+<li>The analysis confirmed that the model does not introduce biases, as the differences in scores align with the dataset’s inherent distribution.</li>
+</ul>
+</section>
+<section id="vi.-python-notebooks" class="level2">
+<h2 class="anchored" data-anchor-id="vi.-python-notebooks"><strong>VI. Python Notebooks</strong></h2>
+<section id="project-category" class="level3">
+<h3 class="anchored" data-anchor-id="project-category"><strong>Project Category:</strong></h3>
+<ol type="1">
+<li><strong>All requirements were met</strong>, and additional work was done to demonstrate creativity and excellence.</li>
+</ol>
+<p><strong>Colab Notebook:</strong><br>
+<a href="https://colab.research.google.com/drive/1romN7rSYlLUdeQDgiWT-y3XRiqSOpjlc#scrollTo=5qOt5Qg8osWy">Personal Project Link</a></p>
+
+
+</section>
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

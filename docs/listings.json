@@ -10,10 +10,10 @@
   {
     "listing": "/projects.html",
     "items": [
-      "/projects/Student_Performance/index.html",
       "/projects/Image_Caption/index.html",
       "/projects/Streaming_Services/index.html",
-      "/projects/Crime_Analysis/index.html"
+      "/projects/Crime_Analysis/index.html",
+      "/projects/Student_Performance/index.html"
     ]
   },
   {
