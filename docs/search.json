@@ -123,7 +123,7 @@
     "href": "projects/Crime_Analysis/index.html",
     "title": "Crime Statistics Analysis",
     "section": "",
-    "text": "Crime Statstics Analysis"
+    "text": "Crime Count by Location\n\n\nCrime is overwhelmingly concentrated in residences and public streets, with significantly lower rates in other locations. This highlights the need for targeted policing and crime prevention efforts in these high-risk areas. Understanding the underlying factors driving crime in homes and streets is crucial for effective intervention.\n\n\n\n\n\n\nOffender Race Distribution\n\n\nThe data shows a disproportionate number of offenders identified as Black or African American and White, raising questions about socio-economic influences and systemic factors. A large number of “Not Specified” and “Unknown” entries also point to gaps in data collection, emphasizing the need for improved reporting practices to support more accurate analysis and intervention.\n\n\n\n\n\n\nVictim Race Distribution\n\n\nWhite individuals are the most frequently reported victims, followed by Black or African American individuals, though with a substantial gap between the two. The presence of “Unknown” and “Not Specified” categories signals incomplete data, limiting a full understanding of victimization trends. More precise data collection is essential for targeted crime prevention and community support.\n\n\n\n\n\n\nCrime Trends Over Time\n\n\nProperty crimes, particularly vandalism, dominate this crime landscape, forming a “long tail” distribution where a few offenses are highly prevalent while others occur infrequently. While addressing property damage is a priority, law enforcement must also be prepared to tackle a diverse range of lesser-reported crimes. Understanding the factors driving both common and rare offenses is key to effective crime prevention in the city."
   },
   {
     "objectID": "projects/Crime_Analysis/index.html#analysis-overview",
@@ -376,5 +376,33 @@
     "title": "Image Captioning Tool",
     "section": "7. Conclusion",
     "text": "7. Conclusion\nThis project embarks on a journey to develop a practical and valuable image captioning tool by harnessing the power of advanced machine learning techniques. The resulting tool has the potential to empower visually impaired individuals, automate tedious image tagging tasks, and even inspire creative expression in social media. By seamlessly integrating CNNs for image feature extraction and LSTMs for caption generation, this project strives to bridge the gap between visual and textual data, enabling computers to perceive and describe the visual world in a manner akin to humans. The insights gained from this project contribute to the ever-evolving field of artificial intelligence, paving the way for future innovations in image understanding and human-computer interaction."
+  },
+  {
+    "objectID": "projects/Crime_Analysis/index.html#crime-count-by-location",
+    "href": "projects/Crime_Analysis/index.html#crime-count-by-location",
+    "title": "Crime Statistics Analysis",
+    "section": "",
+    "text": "Crime Count by Location\n\n\nCrime is overwhelmingly concentrated in residences and public streets, with significantly lower rates in other locations. This highlights the need for targeted policing and crime prevention efforts in these high-risk areas. Understanding the underlying factors driving crime in homes and streets is crucial for effective intervention."
+  },
+  {
+    "objectID": "projects/Crime_Analysis/index.html#offender-race-distribution",
+    "href": "projects/Crime_Analysis/index.html#offender-race-distribution",
+    "title": "Crime Statistics Analysis",
+    "section": "",
+    "text": "Offender Race Distribution\n\n\nThe data shows a disproportionate number of offenders identified as Black or African American and White, raising questions about socio-economic influences and systemic factors. A large number of “Not Specified” and “Unknown” entries also point to gaps in data collection, emphasizing the need for improved reporting practices to support more accurate analysis and intervention."
+  },
+  {
+    "objectID": "projects/Crime_Analysis/index.html#victim-race-distribution",
+    "href": "projects/Crime_Analysis/index.html#victim-race-distribution",
+    "title": "Crime Statistics Analysis",
+    "section": "",
+    "text": "Victim Race Distribution\n\n\nWhite individuals are the most frequently reported victims, followed by Black or African American individuals, though with a substantial gap between the two. The presence of “Unknown” and “Not Specified” categories signals incomplete data, limiting a full understanding of victimization trends. More precise data collection is essential for targeted crime prevention and community support."
+  },
+  {
+    "objectID": "projects/Crime_Analysis/index.html#crime-trends-over-time",
+    "href": "projects/Crime_Analysis/index.html#crime-trends-over-time",
+    "title": "Crime Statistics Analysis",
+    "section": "",
+    "text": "Crime Trends Over Time\n\n\nProperty crimes, particularly vandalism, dominate this crime landscape, forming a “long tail” distribution where a few offenses are highly prevalent while others occur infrequently. While addressing property damage is a priority, law enforcement must also be prepared to tackle a diverse range of lesser-reported crimes. Understanding the factors driving both common and rare offenses is key to effective crime prevention in the city."
   }
 ]
