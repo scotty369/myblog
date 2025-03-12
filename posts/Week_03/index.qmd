@@ -3,7 +3,7 @@ title: "Week 3"
 author: "Scott Townsend"
 date: "2025-02-11"
 categories: [news, code]
-image: "Post3.jpg"
+image: "Post3.png"
 ---
 
 # Word Cloud

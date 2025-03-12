@@ -2,7 +2,7 @@
 date: '2025-02-18'
 title: Crime Statistics Analysis
 categories: [Python, Dataviz]
-image: profile.jpeg
+image: images.png
 title-block-banner: false
 ---
 

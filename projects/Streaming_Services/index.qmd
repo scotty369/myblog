@@ -2,7 +2,7 @@
 date: '2025-03-10'
 title: Streaming Services Analysis
 categories: [Python, Dataviz]
-image: profile.jpeg
+image: profile.png
 title-block-banner: false
 code-folding: show
 code-tools: true
