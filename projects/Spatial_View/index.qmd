@@ -20,7 +20,7 @@ Conversely, **states in the Midwest and Mountain regions generally show lower ac
 
 The use of a log10 scale is crucial here. Without it, the vast differences in accident counts would make it difficult to discern patterns in states with lower numbers. The interactive nature of the plot, achieved through `plotly`, allows users to hover over each state and view the exact accident count, enhancing the exploratory analysis.
 
-There is more work to come! I plan on expanding on this analysis to display the counties. 
+There is more work to come! I plan on expanding on this analysis to display the counties for each state and display a heatmap of the accidets across the country. 
 
 ### R Code Used
 
