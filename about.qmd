@@ -22,8 +22,6 @@ about:
 
 ---
 
-About me:
+Hi there! My name is Scott Townsend, and I’m a Data Scientist with a strong background in data science and machine learning. I've worked on various projects ranging from statistical analyses to building machine learning models, and I’m passionate about using data to drive actionable insights.
 
-Hi there! My name is Scott Townsend, and I'm a senior majoring in Data Science at Brigham Young University - Idaho. Currently, I'm working on my Senior Data Science Project, which has been an exciting and challenging journey.
-
-Through this blog, I’ll be sharing updates on my project as I progress, along with any insights and challenges I face along the way. I'll also showcase other data science projects I’ve completed, as well as those I'm actively working on, ranging from statistical analyses to machine learning applications.
+Through this blog, I’ll be sharing updates on my ongoing projects, insights, and challenges I encounter along the way. I’ll also showcase data science projects I’ve completed, highlighting the tools, techniques, and results from each.
